@@ -1,0 +1,106 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import {
+  Calendar,
+  Heart,
+  TrendingUp,
+  Settings,
+  Plus,
+  ChevronLeft,
+  ChevronRight,
+} from 'https://cdn.jsdelivr.net/npm/lucide-react@0.263.1/+esm'; // CDN import
+
+const moods = [
+  { id: 'happy', name: 'Happy', emoji: '😊', color: 'bg-yellow-100 text-yellow-800' },
+  { id: 'sad', name: 'Sad', emoji: '😢', color: 'bg-blue-100 text-blue-800' },
+  { id: 'angry', name: 'Angry', emoji: '😤', color: 'bg-red-100 text-red-800' },
+  { id: 'anxious', name: 'Anxious', emoji: '😰', color: 'bg-purple-100 text-purple-800' },
+  { id: 'energetic', name: 'Energetic', emoji: '⚡', color: 'bg-orange-100 text-orange-800' },
+  { id: 'tired', name: 'Tired', emoji: '😴', color: 'bg-gray-100 text-gray-800' },
+  { id: 'emotional', name: 'Emotional', emoji: '🥺', color: 'bg-pink-100 text-pink-800' },
+  { id: 'calm', name: 'Calm', emoji: '😌', color: 'bg-green-100 text-green-800' },
+];
+
+const symptoms = [
+  'Cramps', 'Bloating', 'Headache', 'Breast tenderness', 'Acne',
+  'Cravings', 'Nausea', 'Fatigue', 'Mood swings',
+];
+
+// ------------------------------------------------------------------
+// The rest of your component code (unchanged) goes here
+// ------------------------------------------------------------------
+
+import { useState, useEffect } from 'react';
+
+const formatDate = (date) => date.toISOString().split('T')[0];
+
+const MenstrualMoodTracker = () => {
+  const [activeTab, setActiveTab] = useState('track');
+  const [data, setData] = useState({
+    lastPeriodStart: null,
+    cycleLength: 28,
+    periodLength: 5,
+    entries: {},
+  });
+
+  /* -------------------------------------------------------------- */
+  /*  Helper functions and tab components (your original code)      */
+  /* -------------------------------------------------------------- */
+  const TrackTab = () => { /* ... */ };
+  const CalendarTab = () => { /* ... */ };
+  const InsightsTab = () => { /* ... */ };
+  const SettingsTab = () => { /* ... */ };
+
+  const tabs = [
+    { id: 'track', name: 'Track', icon: Plus, component: TrackTab },
+    { id: 'calendar', name: 'Calendar', icon: Calendar, component: CalendarTab },
+    { id: 'insights', name: 'Insights', icon: TrendingUp, component: InsightsTab },
+    { id: 'settings', name: 'Settings', icon: Settings, component: SettingsTab },
+  ];
+
+  const ActiveComponent = tabs.find((t) => t.id === activeTab)?.component || TrackTab;
+
+  return (
+    <div className="max-w-sm mx-auto min-h-screen bg-gray-50">
+      <header className="bg-gradient-to-r from-rose-400 to-pink-500 text-white p-6">
+        <div className="flex items-center space-x-3">
+          <Heart className="w-8 h-8" />
+          <div>
+            <h1 className="text-xl font-bold">Cycle Mood Tracker</h1>
+            <p className="text-rose-100 text-sm">Track your journey</p>
+          </div>
+        </div>
+      </header>
+
+      <main className="pb-20">
+        <ActiveComponent />
+      </main>
+
+      <footer className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm bg-white border-t">
+        <nav className="flex">
+          {tabs.map(({ id, name, icon: Icon }) => (
+            <button
+              key={id}
+              onClick={() => setActiveTab(id)}
+              className={`flex-1 p-4 flex flex-col items-center space-y-1 text-xs font-medium ${
+                activeTab === id
+                  ? 'text-rose-500 bg-rose-50'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              <Icon size={20} />
+              {name}
+            </button>
+          ))}
+        </nav>
+      </footer>
+    </div>
+  );
+};
+
+// Mount React
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <MenstrualMoodTracker />
+  </React.StrictMode>
+);
