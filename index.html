@@ -41,7 +41,7 @@
             background: linear-gradient(to right, rgba(26, 77, 125, 0.9) 0%, rgba(26, 77, 125, 0.7) 50%, rgba(26, 77, 125, 0.5) 100%); /* Overlay for readability */
         }
 
-        /* Loading spinner CSS */
+        /* Loading spinner CSS (kept for potential future use or other features) */
         .loader {
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-top: 4px solid #f26522; /* sws-orange */
@@ -442,28 +442,6 @@
                     </p>
                 </div>
             </div>
-
-            <!-- Gemini API Integration: Service Recommender -->
-            <div class="mt-8 pt-8 border-t border-white border-opacity-20">
-                <h3 class="text-2xl font-semibold mb-6">Service Recommender ✨</h3>
-                <p class="mb-4">
-                    Describe your plumbing or mechanical issue, and our AI assistant can suggest which of our services might be the best fit.
-                </p>
-                <div class="space-y-4">
-                    <div>
-                        <label for="service-problem-description" class="block text-white text-lg font-medium mb-2">Describe Your Problem/Need</label>
-                        <textarea id="service-problem-description" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sws-blue focus:border-transparent bg-white text-sws-gray" rows="4" placeholder="E.g., 'My commercial building's heating system isn't working efficiently,' or 'I need to install a new pump for a specialized liquid.'"></textarea>
-                    </div>
-                    <button id="get-service-recommendation-btn" class="w-full bg-sws-blue text-white py-3 px-6 rounded-lg shadow-md hover:bg-blue-800 transition duration-300 font-semibold text-lg flex items-center justify-center">
-                        <span id="service-button-text">✨ Get Service Recommendation</span>
-                        <div id="service-loading-spinner" class="loader ml-3 hidden"></div>
-                    </button>
-                    <div>
-                        <label for="service-recommendation-output" class="block text-white text-lg font-medium mb-2 mt-4">Our Recommendation</label>
-                        <textarea id="service-recommendation-output" class="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-700" rows="6" readonly placeholder="Your service recommendation will appear here..."></textarea>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -695,7 +673,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="text-lg leading-relaxed">
                     <p class="mb-6">
-                        In regions with challenging winter weather, maintaining clear and safe walkways, driveways, and critical access points is paramount. SWS Mechanical specializes in the design, installation, maintenance, and servicing of automated snow melt systems, ensuring your commercial and multifamily properties remain accessible and secure during the coldest months.
+                        In regions with challenging winter weather, maintaining clear and safe walkways, driveways, and critical access points is paramount. SWS Mechanical specializes in the design, installation, and maintenance of automated snow melt systems, ensuring your commercial and multifamily properties remain accessible and secure during the coldest months.
                     </p>
                     <p class="mb-6">
                         Our snow melt systems effectively prevent the accumulation of snow and ice, significantly reducing the risk of slips and falls, and eliminating the need for manual snow removal. By circulating warm fluid through durable PEX tubing buried beneath surfaces, these systems offer unparalleled convenience, cost savings, and environmental benefits.
@@ -1060,7 +1038,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Service Recommender elements
+            // No Project Scope Assistant elements to initialize or listen to
+            // as the feature has been removed.
+
+            // Service Recommender elements (these are now the only AI elements)
             const getServiceRecommendationBtn = document.getElementById('get-service-recommendation-btn');
             const serviceProblemDescription = document.getElementById('service-problem-description');
             const serviceRecommendationOutput = document.getElementById('service-recommendation-output');
@@ -1136,7 +1117,12 @@ Recommendation:`;
                         }
                     } catch (error) {
                         console.error("Error calling Gemini API for service recommendation:", error);
-                        serviceRecommendationOutput.value = `An error occurred: ${error.message}. Please try again later.`;
+                        // Provide a more specific message for 401 Unauthorized errors
+                        if (error.message.includes("401")) {
+                            serviceRecommendationOutput.value = "Authentication error: The API key is missing or invalid. Please ensure your environment is correctly configured with a valid API key for the Gemini API.";
+                        } else {
+                            serviceRecommendationOutput.value = `An error occurred: ${error.message}. Please try again later.`;
+                        }
                     } finally {
                         // Hide loading spinner and enable button
                         serviceLoadingSpinner.classList.add('hidden');
