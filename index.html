@@ -6,11 +6,11 @@
     <title>SWS Mechanical - When Failure Isn't an Option</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Rubik font from Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Commissioner font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Rubik', sans-serif; /* Changed global font to Rubik */
+            font-family: 'Commissioner', sans-serif; /* Changed global font to Commissioner */
             background-color: #f8f8f8; /* Light gray background for the page */
             scroll-behavior: smooth; /* Smooth scrolling for anchor links */
         }
@@ -119,6 +119,48 @@
         .icon-hover-scale:hover {
             transform: scale(1.15);
         }
+
+        /* Translucent backgrounds for sections */
+        #who-we-serve-section,
+        #featured-projects-section,
+        #certifications-affiliations-section,
+        #process-overview-section,
+        #about-us,
+        #boiler-installation-section,
+        #specialty-equipment-piping-section,
+        #chilled-water-systems-section,
+        #steam-piping-systems-section,
+        #contact-us {
+            background-color: rgba(255, 255, 255, 0.75); /* 75% opaque white */
+        }
+
+        #why-sws-mechanical-section,
+        #our-services,
+        #specialty-pumps-section,
+        #hydronic-systems-section,
+        #snow-melt-systems-section,
+        #industries-we-serve,
+        #careers-with-us {
+            background-color: rgba(74, 74, 74, 0.75); /* 75% opaque steel gray */
+        }
+
+        /* Adjusting nested elements that might have their own backgrounds to be transparent or match */
+        #our-services .bg-white.bg-opacity-10,
+        #specialty-pumps-section .bg-white.bg-opacity-10,
+        #hydronic-systems-section .bg-white.bg-opacity-10,
+        #snow-melt-systems-section .bg-white.bg-opacity-10,
+        #industries-we-serve .bg-white.bg-opacity-10,
+        #careers-with-us .bg-white.bg-opacity-10 {
+            background-color: rgba(255, 255, 255, 0.15); /* Slightly more opaque white for cards on dark sections */
+        }
+        #about-us .bg-gray-50,
+        #process-overview-section .bg-gray-50,
+        #boiler-installation-section .bg-gray-50,
+        #specialty-equipment-piping-section .bg-gray-50,
+        #chilled-water-systems-section .bg-gray-50,
+        #steam-piping-systems-section .bg-gray-50 {
+            background-color: rgba(249, 250, 251, 0.75); /* 75% opaque gray-50 for cards on light sections */
+        }
     </style>
 </head>
 <body class="text-sws-gray">
@@ -182,7 +224,7 @@
     </section>
 
     <!-- Who We Serve -->
-    <section class="py-16 md:py-24 bg-white px-6">
+    <section id="who-we-serve-section" class="py-16 md:py-24 px-6">
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Who We Serve</h2>
             <p class="text-lg md:text-xl text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
@@ -231,8 +273,8 @@
     </section>
 
     <!-- Why SWS Mechanical? -->
-    <section class="py-16 md:py-24 bg-sws-blue px-6">
-        <div class="container mx-auto max-w-6xl text-white">
+    <section id="why-sws-mechanical-section" class="py-16 md:py-24 px-6 text-white">
+        <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 animate-on-scroll">Why SWS Mechanical?</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="p-8 rounded-xl bg-white bg-opacity-10 shadow-lg hover-lift-shadow animate-on-scroll">
@@ -275,8 +317,8 @@
         </div>
     </section>
 
-    <!-- Featured Projects (from main page) -->
-    <section class="py-16 md:py-24 bg-white px-6">
+    <!-- Featured Projects -->
+    <section id="featured-projects-section" class="py-16 md:py-24 px-6">
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Featured Projects</h2>
             <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10 animate-on-scroll">
@@ -343,7 +385,7 @@
     </section>
 
     <!-- Certifications & Affiliations -->
-    <section class="py-16 md:py-24 bg-white px-6">
+    <section id="certifications-affiliations-section" class="py-16 md:py-24 px-6">
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Credentials & Affiliations</h2>
             <p class="text-lg md:text-xl text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
@@ -360,7 +402,7 @@
     </section>
 
     <!-- Process Overview -->
-    <section class="py-16 md:py-24 bg-gray-50 px-6">
+    <section id="process-overview-section" class="py-16 md:py-24 px-6">
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">How We Work</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
