@@ -1,371 +1,481 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharp Water Solutions - Clean Water, Clear Choice</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            color: #333;
-            background-color: #f8f8f8;
-            /* Add padding to the top of the body to prevent content from being hidden behind the fixed header */
-            padding-top: 72px; /* Adjust this value based on the header's height */
-        }
-        /* Changed primary color to dark navy blue */
-        .text-primary {
-            color: #0A2342; /* Dark navy blue for primary elements */
-        }
-        .bg-primary {
-            background-color: #0A2342;
-        }
-        .btn-primary {
-            /* Using direct Tailwind classes for consistency and explicit styling */
-            @apply bg-[#0A2342] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[#061424] transition duration-300 ease-in-out transform hover:scale-105;
-        }
-        /* Made headlines bigger, bolder, and dark blue using explicit CSS properties */
-        .section-heading {
-            font-size: 1.875rem; /* Equivalent to text-3xl */
-            font-weight: 800; /* Equivalent to font-extrabold */
-            color: #13274f; /* New dark blue color for headlines */
-            margin-bottom: 2rem; /* Equivalent to mb-8 */
-            text-align: center;
-        }
-        /* Responsive adjustment for headlines */
-        @media (min-width: 768px) { /* md breakpoint */
-            .section-heading {
-                font-size: 2.25rem; /* Equivalent to md:text-4xl */
-            }
-        }
-        .service-card {
-            @apply bg-white rounded-xl shadow-lg p-8 flex flex-col items-center text-center transition duration-300 ease-in-out hover:shadow-xl hover:scale-105;
-        }
-        .icon-large {
-            @apply text-5xl mb-4 text-primary;
-        }
-        /* Fixed header styling */
-        .fixed-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000; /* Ensure it stays on top of other content */
-        }
-    </style>
-</head>
-<body>
+import React, { useState, useEffect } from 'react';
+import { Calendar, Heart, TrendingUp, Settings, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 
-    <!-- Header Section -->
-    <header class="bg-white shadow-md py-4 fixed-header">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <!-- Logo -->
-            <a href="#" class="flex items-center space-x-2">
-                <img src="https://lirp.cdn-website.com/80c3db1d806a43ed92f207627f52abdc/dms3rep/multi/opt/opengraph-1920w.png" alt="Sharp Water Solutions Logo" class="h-12 object-contain">
-            </a>
-            <!-- Navigation -->
-            <nav class="hidden md:block">
-                <ul class="flex space-x-8">
-                    <li><a href="#home" class="text-gray-600 hover:text-primary font-medium transition duration-200">Home</a></li>
-                    <li><a href="#services" class="text-gray-600 hover:text-primary font-medium transition duration-200">Services</a></li>
-                    <li><a href="#about" class="text-gray-600 hover:text-primary font-medium transition duration-200">About Us</a></li>
-                    <li><a href="#testimonials" class="text-gray-600 hover:text-primary font-medium transition duration-200">Testimonials</a></li>
-                    <li><a href="#contact" class="text-gray-600 hover:text-primary font-medium transition duration-200">Contact</a></li>
-                </ul>
-            </nav>
-            <!-- Mobile Menu Button (Hamburger) -->
-            <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-primary focus:outline-none">
-                <i class="fas fa-bars text-2xl"></i>
+const MenstrualMoodTracker = () => {
+  const [activeTab, setActiveTab] = useState('track');
+  const [data, setData] = useState({
+    lastPeriodStart: null,
+    cycleLength: 28,
+    periodLength: 5,
+    entries: {} // date -> { moods: [], symptoms: [], notes: '' }
+  });
+
+  const moods = [
+    { id: 'happy', name: 'Happy', emoji: '😊', color: 'bg-yellow-100 text-yellow-800' },
+    { id: 'sad', name: 'Sad', emoji: '😢', color: 'bg-blue-100 text-blue-800' },
+    { id: 'angry', name: 'Angry', emoji: '😤', color: 'bg-red-100 text-red-800' },
+    { id: 'anxious', name: 'Anxious', emoji: '😰', color: 'bg-purple-100 text-purple-800' },
+    { id: 'energetic', name: 'Energetic', emoji: '⚡', color: 'bg-orange-100 text-orange-800' },
+    { id: 'tired', name: 'Tired', emoji: '😴', color: 'bg-gray-100 text-gray-800' },
+    { id: 'emotional', name: 'Emotional', emoji: '🥺', color: 'bg-pink-100 text-pink-800' },
+    { id: 'calm', name: 'Calm', emoji: '😌', color: 'bg-green-100 text-green-800' }
+  ];
+
+  const symptoms = [
+    'Cramps', 'Bloating', 'Headache', 'Breast tenderness', 
+    'Acne', 'Cravings', 'Nausea', 'Fatigue', 'Mood swings'
+  ];
+
+  const formatDate = (date) => date.toISOString().split('T')[0];
+
+  const getCycleDay = (date) => {
+    if (!data.lastPeriodStart) return null;
+    const start = new Date(data.lastPeriodStart);
+    const diff = Math.floor((date - start) / (1000 * 60 * 60 * 24)) + 1;
+    return diff > 0 ? diff : null;
+  };
+
+  const getCyclePhase = (cycleDay) => {
+    if (!cycleDay) return { name: 'Unknown', color: 'bg-gray-200' };
+    
+    if (cycleDay <= data.periodLength) {
+      return { name: 'Menstrual', color: 'bg-red-200' };
+    } else if (cycleDay <= 13) {
+      return { name: 'Follicular', color: 'bg-green-200' };
+    } else if (cycleDay <= 15) {
+      return { name: 'Ovulation', color: 'bg-yellow-200' };
+    } else {
+      return { name: 'Luteal', color: 'bg-purple-200' };
+    }
+  };
+
+  const updateEntry = (date, field, value) => {
+    const dateStr = formatDate(date);
+    setData(prev => ({
+      ...prev,
+      entries: {
+        ...prev.entries,
+        [dateStr]: {
+          moods: [],
+          symptoms: [],
+          notes: '',
+          ...prev.entries[dateStr],
+          [field]: value
+        }
+      }
+    }));
+  };
+
+  const toggleMood = (date, moodId) => {
+    const dateStr = formatDate(date);
+    const currentMoods = data.entries[dateStr]?.moods || [];
+    const newMoods = currentMoods.includes(moodId) 
+      ? currentMoods.filter(m => m !== moodId)
+      : [...currentMoods, moodId];
+    
+    updateEntry(date, 'moods', newMoods);
+  };
+
+  const toggleSymptom = (date, symptom) => {
+    const dateStr = formatDate(date);
+    const currentSymptoms = data.entries[dateStr]?.symptoms || [];
+    const newSymptoms = currentSymptoms.includes(symptom)
+      ? currentSymptoms.filter(s => s !== symptom)
+      : [...currentSymptoms, symptom];
+    
+    updateEntry(date, 'symptoms', newSymptoms);
+  };
+
+  // Track Tab Component
+  const TrackTab = () => {
+    const today = new Date();
+    const cycleDay = getCycleDay(today);
+    const phase = getCyclePhase(cycleDay);
+    const todayEntry = data.entries[formatDate(today)] || { moods: [], symptoms: [], notes: '' };
+
+    return (
+      <div className="p-4 space-y-6">
+        {/* Cycle Status */}
+        <div className="bg-white rounded-xl p-6 shadow-sm">
+          <div className="text-center">
+            <div className={`inline-block px-4 py-2 rounded-full ${phase.color} font-medium mb-2`}>
+              {phase.name} Phase
+            </div>
+            <p className="text-gray-600">
+              {cycleDay ? `Day ${cycleDay} of cycle` : 'Set your period start date'}
+            </p>
+          </div>
+        </div>
+
+        {/* Mood Selection */}
+        <div className="bg-white rounded-xl p-6 shadow-sm">
+          <h2 className="text-lg font-semibold mb-4">How are you feeling?</h2>
+          <div className="grid grid-cols-2 gap-3">
+            {moods.map(mood => (
+              <button
+                key={mood.id}
+                onClick={() => toggleMood(today, mood.id)}
+                className={`p-3 rounded-lg border-2 transition-all ${
+                  todayEntry.moods.includes(mood.id)
+                    ? `${mood.color} border-current`
+                    : 'border-gray-200 hover:border-gray-300'
+                }`}
+              >
+                <div className="text-2xl mb-1">{mood.emoji}</div>
+                <div className="text-sm font-medium">{mood.name}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Symptoms */}
+        <div className="bg-white rounded-xl p-6 shadow-sm">
+          <h2 className="text-lg font-semibold mb-4">Symptoms</h2>
+          <div className="flex flex-wrap gap-2">
+            {symptoms.map(symptom => (
+              <button
+                key={symptom}
+                onClick={() => toggleSymptom(today, symptom)}
+                className={`px-3 py-2 rounded-full text-sm font-medium transition-all ${
+                  todayEntry.symptoms.includes(symptom)
+                    ? 'bg-rose-500 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {symptom}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Notes */}
+        <div className="bg-white rounded-xl p-6 shadow-sm">
+          <h2 className="text-lg font-semibold mb-4">Notes</h2>
+          <textarea
+            value={todayEntry.notes}
+            onChange={(e) => updateEntry(today, 'notes', e.target.value)}
+            placeholder="How are you feeling today? Any observations?"
+            className="w-full p-3 border border-gray-200 rounded-lg resize-none"
+            rows="3"
+          />
+        </div>
+      </div>
+    );
+  };
+
+  // Calendar Tab Component
+  const CalendarTab = () => {
+    const [currentMonth, setCurrentMonth] = useState(new Date());
+    
+    const getDaysInMonth = () => {
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth();
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const startDate = new Date(firstDay);
+      startDate.setDate(startDate.getDate() - firstDay.getDay());
+      
+      const days = [];
+      for (let i = 0; i < 42; i++) {
+        const date = new Date(startDate);
+        date.setDate(startDate.getDate() + i);
+        days.push(date);
+      }
+      return days;
+    };
+
+    const days = getDaysInMonth();
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    return (
+      <div className="p-4">
+        <div className="bg-white rounded-xl p-4 shadow-sm">
+          {/* Calendar Header */}
+          <div className="flex items-center justify-between mb-4">
+            <button
+              onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
+              className="p-2 hover:bg-gray-100 rounded-lg"
+            >
+              <ChevronLeft className="w-5 h-5" />
             </button>
-        </div>
-        <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="md:hidden bg-white shadow-lg py-4 px-6 hidden">
-            <ul class="flex flex-col space-y-4">
-                <li><a href="#home" class="block text-gray-600 hover:text-primary font-medium transition duration-200 py-2">Home</a></li>
-                <li><a href="#services" class="block text-gray-600 hover:text-primary font-medium transition duration-200 py-2">Services</a></li>
-                <li><a href="#about" class="block text-gray-600 hover:text-primary font-medium transition duration-200 py-2">About Us</a></li>
-                <li><a href="#testimonials" class="block text-gray-600 hover:text-primary font-medium transition duration-200 py-2">Testimonials</a></li>
-                <li><a href="#contact" class="block text-gray-600 hover:text-primary font-medium transition duration-200 py-2">Contact</a></li>
-            </ul>
-        </div>
-    </header>
+            <h2 className="text-lg font-semibold">
+              {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+            </h2>
+            <button
+              onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
+              className="p-2 hover:bg-gray-100 rounded-lg"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="relative bg-gradient-to-r from-[#0A2342] to-[#061424] text-white py-20 md:py-32 overflow-hidden">
-        <div class="absolute inset-0 z-0 opacity-50">
-            <!-- Placeholder for background image or pattern -->
-            <img src="https://img.freepik.com/free-photo/fresh-water-texture-background-transparent-liquid_53876-142911.jpg" alt="Clean Water Background" class="w-full h-full object-cover">
-        </div>
-        <div class="container mx-auto px-6 relative z-10 text-center">
-            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6 animate-fade-in-up">
-                Experience the Difference of Truly Clean Water
-            </h1>
-            <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90 animate-fade-in-up delay-200">
-                Sharp Water Solutions provides expert water softening, purification, and plumbing services for homes and businesses in Salt Lake Valley.
-            </p>
-            <a href="#contact" class="btn-primary animate-fade-in-up delay-400">Get Your Free Water Analysis Today!</a>
-        </div>
-    </section>
+          {/* Day Headers */}
+          <div className="grid grid-cols-7 gap-1 mb-2">
+            {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => (
+              <div key={day} className="text-center text-xs font-medium text-gray-500 p-2">
+                {day}
+              </div>
+            ))}
+          </div>
 
-    <!-- About Us Section -->
-    <section id="about" class="py-16 md:py-24 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="section-heading">Your Trusted Partner for Water Solutions</h2>
-            <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
-                <div class="md:w-1/2 text-lg text-gray-700 leading-relaxed">
-                    <p class="mb-4">
-                        Since 2002, Sharp Water Solutions has been dedicated to providing the Salt Lake Valley with superior water quality and reliable plumbing services. As a locally owned and operated company, we understand the unique water challenges in our community and are committed to delivering tailored solutions.
-                    </p>
-                    <p class="mb-4">
-                        Our team of experienced and licensed plumbing contractors specializes in everything from advanced water softening and purification systems to efficient water heater installations and comprehensive plumbing repairs. We pride ourselves on our professionalism, affordability, and a customer-first approach that ensures your complete satisfaction.
-                    </p>
-                    <p>
-                        Choose Sharp Water Solutions for clean, safe, and great-tasting water, and plumbing peace of mind.
-                    </p>
-                </div>
-                <div class="md:w-1/2">
-                    <img src="https://img.freepik.com/free-photo/child-his-father-washing-lemons_23-2148517574.jpg" alt="Happy family enjoying clean water" class="rounded-xl shadow-lg w-full h-auto object-cover">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="py-16 md:py-24 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <h2 class="section-heading">Our Comprehensive Water & Plumbing Services</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Service Card 1: Water Softeners -->
-                <div class="service-card">
-                    <i class="fas fa-tint icon-large"></i>
-                    <h3 class="text-2xl font-semibold mb-3 text-gray-800">Water Softeners</h3>
-                    <p class="text-gray-600">Eliminate hard water issues like scale buildup, dry skin, and dull laundry. Enjoy softer skin, shinier dishes, and longer-lasting appliances.</p>
-                </div>
-                <!-- Service Card 2: Water Purification -->
-                <div class="service-card">
-                    <i class="fas fa-filter icon-large"></i>
-                    <h3 class="text-2xl font-semibold mb-3 text-gray-800">Water Purification Systems</h3>
-                    <p class="text-gray-600">Remove contaminants, chlorine, and odors for pure, great-tasting drinking water directly from your tap. Includes R/O units and whole-house filters.</p>
-                </div>
-                <!-- Service Card 3: Water Heaters -->
-                <div class="service-card">
-                    <i class="fas fa-fire icon-large"></i>
-                    <h3 class="text-2xl font-semibold mb-3 text-gray-800">Water Heater Services</h3>
-                    <p class="text-gray-600">Installation, repair, and maintenance for all types of water heaters. Ensure consistent hot water and energy efficiency for your home.</p>
-                </div>
-                <!-- Service Card 4: R/O Units -->
-                <div class="service-card">
-                    <i class="fas fa-faucet icon-large"></i>
-                    <h3 class="text-2xl font-semibold mb-3 text-gray-800">Reverse Osmosis (R/O) Systems</h3>
-                    <p class="text-gray-600">Experience the highest level of water purity with our advanced R/O systems, removing even microscopic impurities for ultimate peace of mind.</p>
-                </div>
-                <!-- Service Card 5: Whole House Filters -->
-                <div class="service-card">
-                    <i class="fas fa-home icon-large"></i>
-                    <h3 class="text-2xl font-semibold mb-3 text-gray-800">Whole House Filtration</h3>
-                    <p class="text-gray-600">Protect your entire home from sediment, chlorine, and other impurities, improving water quality for all uses, from showering to cooking.</p>
-                </div>
-                <!-- Service Card 6: General Plumbing -->
-                <div class="service-card">
-                    <i class="fas fa-wrench icon-large"></i>
-                    <h3 class="text-2xl font-semibold mb-3 text-gray-800">Expert Plumbing Services</h3>
-                    <p class="text-gray-600">Beyond water treatment, our licensed plumbers handle all your general plumbing needs, from leak repairs to fixture installations.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Why Choose Us / Benefits Section -->
-    <section class="py-16 md:py-24 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="section-heading">Why Choose Sharp Water Solutions?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="flex items-start space-x-4 p-6 bg-blue-50 rounded-xl shadow-sm">
-                    <i class="fas fa-award text-4xl text-primary mt-1"></i>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Experienced & Licensed</h3>
-                        <p class="text-gray-600">With over two decades of experience, our licensed plumbing contractors ensure professional and reliable service every time.</p>
+          {/* Calendar Grid */}
+          <div className="grid grid-cols-7 gap-1">
+            {days.map((day, index) => {
+              const dateStr = formatDate(day);
+              const entry = data.entries[dateStr];
+              const cycleDay = getCycleDay(day);
+              const phase = getCyclePhase(cycleDay);
+              const isCurrentMonth = day.getMonth() === currentMonth.getMonth();
+              const isToday = formatDate(day) === formatDate(new Date());
+              
+              return (
+                <div
+                  key={index}
+                  className={`relative p-2 h-12 rounded ${
+                    isCurrentMonth ? 'bg-white' : 'bg-gray-50'
+                  } ${isToday ? 'ring-2 ring-rose-400' : ''}`}
+                >
+                  <div className={`text-sm ${isCurrentMonth ? 'text-gray-900' : 'text-gray-400'}`}>
+                    {day.getDate()}
+                  </div>
+                  
+                  {/* Cycle phase indicator */}
+                  {cycleDay && isCurrentMonth && (
+                    <div className={`absolute top-1 right-1 w-2 h-2 rounded-full ${
+                      phase.name === 'Menstrual' ? 'bg-red-400' :
+                      phase.name === 'Follicular' ? 'bg-green-400' :
+                      phase.name === 'Ovulation' ? 'bg-yellow-400' : 'bg-purple-400'
+                    }`} />
+                  )}
+                  
+                  {/* Mood indicators */}
+                  {entry && entry.moods.length > 0 && (
+                    <div className="absolute bottom-1 left-1 flex">
+                      <div className="w-1 h-1 rounded-full bg-rose-400" />
                     </div>
+                  )}
                 </div>
-                <div class="flex items-start space-x-4 p-6 bg-blue-50 rounded-xl shadow-sm">
-                    <i class="fas fa-handshake text-4xl text-primary mt-1"></i>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Customer-Centric Approach</h3>
-                        <p class="text-gray-600">Your satisfaction is our priority. We offer personalized solutions and transparent communication from start to finish.</p>
-                    </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Insights Tab Component
+  const InsightsTab = () => {
+    const getMoodsByPhase = () => {
+      const phaseData = {
+        'Menstrual': {},
+        'Follicular': {},
+        'Ovulation': {},
+        'Luteal': {}
+      };
+
+      Object.entries(data.entries).forEach(([dateStr, entry]) => {
+        const date = new Date(dateStr);
+        const cycleDay = getCycleDay(date);
+        const phase = getCyclePhase(cycleDay);
+        
+        if (phase.name !== 'Unknown' && entry.moods) {
+          if (!phaseData[phase.name]) phaseData[phase.name] = {};
+          entry.moods.forEach(moodId => {
+            phaseData[phase.name][moodId] = (phaseData[phase.name][moodId] || 0) + 1;
+          });
+        }
+      });
+
+      return phaseData;
+    };
+
+    const phaseData = getMoodsByPhase();
+
+    return (
+      <div className="p-4 space-y-6">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
+          <h2 className="text-lg font-semibold mb-4">Mood Patterns by Phase</h2>
+          
+          {Object.entries(phaseData).map(([phase, moodCounts]) => (
+            <div key={phase} className="mb-6">
+              <h3 className="font-medium text-gray-800 mb-3">{phase}</h3>
+              
+              {Object.keys(moodCounts).length > 0 ? (
+                <div className="space-y-2">
+                  {Object.entries(moodCounts).map(([moodId, count]) => {
+                    const mood = moods.find(m => m.id === moodId);
+                    return (
+                      <div key={moodId} className="flex items-center space-x-3">
+                        <span className="text-lg">{mood?.emoji}</span>
+                        <span className="text-sm font-medium flex-1">{mood?.name}</span>
+                        <span className="text-sm text-gray-600">{count} times</span>
+                      </div>
+                    );
+                  })}
                 </div>
-                <div class="flex items-start space-x-4 p-6 bg-blue-50 rounded-xl shadow-sm">
-                    <i class="fas fa-dollar-sign text-4xl text-primary mt-1"></i>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Affordable & Transparent</h3>
-                        <p class="text-gray-600">High-quality services shouldn't break the bank. We provide competitive pricing with no hidden fees.</p>
-                    </div>
-                </div>
-                <div class="flex items-start space-x-4 p-6 bg-blue-50 rounded-xl shadow-sm">
-                    <i class="fas fa-map-marker-alt text-4xl text-primary mt-1"></i>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Local Salt Lake Valley Experts</h3>
-                        <p class="text-gray-600">We're part of your community, understanding local water conditions and providing swift, local service.</p>
-                    </div>
-                </div>
-                <div class="flex items-start space-x-4 p-6 bg-blue-50 rounded-xl shadow-sm">
-                    <i class="fas fa-leaf text-4xl text-primary mt-1"></i>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Eco-Friendly Solutions</h3>
-                        <p class="text-gray-600">We offer efficient systems that not only save you money but also reduce your environmental footprint.</p>
-                    </div>
-                </div>
-                <div class="flex items-start space-x-4 p-6 bg-blue-50 rounded-xl shadow-sm">
-                    <i class="fas fa-bolt text-4xl text-primary mt-1"></i>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2 text-gray-800">Prompt & Reliable Service</h3>
-                        <p class="text-gray-600">We value your time. Our team is committed to timely arrivals and efficient completion of all jobs.</p>
-                    </div>
-                </div>
+              ) : (
+                <p className="text-gray-500 text-sm">No mood data yet</p>
+              )}
             </div>
+          ))}
         </div>
-    </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="py-16 md:py-24 bg-gray-100">
-        <div class="container mx-auto px-6">
-            <h2 class="section-heading">What Our Customers Say</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="bg-white rounded-xl shadow-lg p-8 transform transition duration-300 hover:scale-105">
-                    <p class="text-gray-700 italic mb-6">"Sharp Water Solutions transformed our hard water nightmare into a dream! Our skin feels softer, and our appliances are running much better. Fantastic service!"</p>
-                    <p class="font-semibold text-gray-800">- Sarah L., Salt Lake City</p>
-                </div>
-                <!-- Testimonial 2 -->
-                <div class="bg-white rounded-xl shadow-lg p-8 transform transition duration-300 hover:scale-105">
-                    <p class="text-gray-700 italic mb-6">"Professional, prompt, and incredibly knowledgeable. They fixed our old water heater quickly and efficiently. Highly recommend their plumbing services!"</p>
-                    <p class="font-semibold text-gray-800">- Mark T., Sandy</p>
-                </div>
-                <!-- Testimonial 3 -->
-                <div class="bg-white rounded-xl shadow-lg p-8 transform transition duration-300 hover:scale-105">
-                    <p class="text-gray-700 italic mb-6">"The R/O system they installed gives us the purest drinking water. No more bottled water! The team was friendly and the installation was seamless."</p>
-                    <p class="font-semibold text-gray-800">- Emily R., Draper</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Call to Action Section -->
-    <section class="bg-primary text-white py-16 md:py-20 text-center">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready for Cleaner, Better Water?</h2>
-            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">
-                Contact Sharp Water Solutions today for a free consultation or to schedule your service. We're here to help!
-            </p>
-            <a href="#contact" class="btn-primary bg-white text-primary hover:bg-gray-100">Get a Free Quote</a>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-16 md:py-24 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="section-heading">Contact Us</h2>
-            <div class="flex flex-col md:flex-row justify-center items-start space-y-12 md:space-y-0 md:space-x-16">
-                <!-- Contact Info -->
-                <div class="md:w-1/2 lg:w-1/3 text-center md:text-left">
-                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Get in Touch</h3>
-                    <p class="text-lg text-gray-700 mb-4 flex items-center justify-center md:justify-start">
-                        <i class="fas fa-phone-alt text-primary mr-3"></i> 801-233-3325
-                    </p>
-                    <p class="text-lg text-gray-700 mb-4 flex items-center justify-center md:justify-start">
-                        <i class="fas fa-envelope text-primary mr-3"></i> office@swsmech.com
-                    </p>
-                    <p class="text-lg text-gray-700 mb-4 flex items-center justify-center md:justify-start">
-                        <i class="fas fa-map-marker-alt text-primary mr-3"></i> 14505 S Center Point Way, Bluffdale, UT 84065
-                    </p>
-                    <h4 class="text-xl font-semibold mt-8 mb-3 text-gray-800">Business Hours:</h4>
-                    <p class="text-lg text-gray-700">Monday - Friday: 8:00 AM - 5:00 PM</p>
-                    <p class="text-lg text-gray-700">Saturday - Sunday: Closed</p>
-                </div>
-
-                <!-- Contact Form (Placeholder) -->
-                <div class="md:w-1/2 lg:w-2/5 w-full bg-gray-50 p-8 rounded-xl shadow-lg">
-                    <h3 class="text-2xl font-semibold mb-6 text-gray-800 text-center">Send Us a Message</h3>
-                    <form>
-                        <div class="mb-4">
-                            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                            <input type="text" id="name" name="name" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Your Name">
-                        </div>
-                        <div class="mb-4">
-                            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                            <input type="email" id="email" name="email" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="your@email.com">
-                        </div>
-                        <div class="mb-4">
-                            <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">Phone (Optional)</label>
-                            <input type="tel" id="phone" name="phone" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="e.g., 555-123-4567">
-                        </div>
-                        <div class="mb-6">
-                            <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Message</label>
-                            <textarea id="message" name="message" rows="5" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Tell us about your water needs..."></textarea>
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <button type="submit" class="btn-primary w-full">Send Message</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer Section -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-6 text-center md:flex md:justify-between md:items-center">
-            <p class="text-sm mb-4 md:mb-0">&copy; 2025 Sharp Water Solutions. All rights reserved.</p>
-            <div class="flex justify-center md:justify-end space-x-6">
-                <!-- Social Media Icons (placeholders) -->
-                <a href="#" class="text-gray-400 hover:text-white transition duration-200"><i class="fab fa-facebook-f text-lg"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition duration-200"><i class="fab fa-twitter text-lg"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white transition duration-200"><i class="fab fa-instagram text-lg"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Smooth scrolling for navigation links (excluding the logo link with href="#")
-        document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-                // Close mobile menu if open
-                const mobileMenu = document.getElementById('mobile-menu');
-                if (!mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.add('hidden');
+        {/* Sample Data Button */}
+        <div className="bg-white rounded-xl p-6 shadow-sm">
+          <h3 className="font-medium text-gray-800 mb-3">Demo Data</h3>
+          <button
+            onClick={() => {
+              const today = new Date();
+              const sampleData = {
+                lastPeriodStart: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 10).toISOString(),
+                cycleLength: 28,
+                periodLength: 5,
+                entries: {
+                  [formatDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 10))]: {
+                    moods: ['sad', 'tired'], symptoms: ['Cramps', 'Bloating'], notes: 'First day of period'
+                  },
+                  [formatDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 5))]: {
+                    moods: ['energetic', 'happy'], symptoms: [], notes: 'Feeling better'
+                  },
+                  [formatDate(today)]: {
+                    moods: ['calm', 'happy'], symptoms: [], notes: 'Good day today'
+                  }
                 }
-            });
-        });
+              };
+              setData(sampleData);
+            }}
+            className="w-full bg-blue-500 text-white py-2 rounded-lg font-medium hover:bg-blue-600 transition-colors"
+          >
+            Load Sample Data
+          </button>
+        </div>
+      </div>
+    );
+  };
 
-        // Handle the logo link specifically to scroll to top
-        document.querySelector('a[href="#"]').addEventListener('click', function(e) {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            const mobileMenu = document.getElementById('mobile-menu');
-            if (!mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.add('hidden');
-            }
-        });
+  // Settings Tab Component
+  const SettingsTab = () => {
+    const [periodDate, setPeriodDate] = useState(
+      data.lastPeriodStart ? new Date(data.lastPeriodStart).toISOString().split('T')[0] : ''
+    );
 
-        // Toggle mobile menu visibility
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+    const handleSave = () => {
+      setData(prev => ({
+        ...prev,
+        lastPeriodStart: periodDate ? new Date(periodDate).toISOString() : null
+      }));
+    };
 
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-    </script>
-</body>
-</html>
+    return (
+      <div className="p-4 space-y-6">
+        <div className="bg-white rounded-xl p-6 shadow-sm">
+          <h2 className="text-lg font-semibold mb-4">Cycle Settings</h2>
+          
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Last Period Start Date
+              </label>
+              <input
+                type="date"
+                value={periodDate}
+                onChange={(e) => setPeriodDate(e.target.value)}
+                className="w-full p-3 border border-gray-200 rounded-lg"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Cycle Length (days)
+              </label>
+              <input
+                type="number"
+                value={data.cycleLength}
+                onChange={(e) => setData(prev => ({ ...prev, cycleLength: parseInt(e.target.value) || 28 }))}
+                className="w-full p-3 border border-gray-200 rounded-lg"
+                min="21"
+                max="45"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Period Length (days)
+              </label>
+              <input
+                type="number"
+                value={data.periodLength}
+                onChange={(e) => setData(prev => ({ ...prev, periodLength: parseInt(e.target.value) || 5 }))}
+                className="w-full p-3 border border-gray-200 rounded-lg"
+                min="3"
+                max="10"
+              />
+            </div>
+            
+            <button
+              onClick={handleSave}
+              className="w-full bg-rose-500 text-white py-3 rounded-lg font-medium hover:bg-rose-600 transition-colors"
+            >
+              Save Settings
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const tabs = [
+    { id: 'track', name: 'Track', icon: Plus, component: TrackTab },
+    { id: 'calendar', name: 'Calendar', icon: Calendar, component: CalendarTab },
+    { id: 'insights', name: 'Insights', icon: TrendingUp, component: InsightsTab },
+    { id: 'settings', name: 'Settings', icon: Settings, component: SettingsTab }
+  ];
+
+  const ActiveComponent = tabs.find(tab => tab.id === activeTab)?.component || TrackTab;
+
+  return (
+    <div className="max-w-sm mx-auto min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-rose-400 to-pink-500 text-white p-6">
+        <div className="flex items-center space-x-3">
+          <Heart className="w-8 h-8" />
+          <div>
+            <h1 className="text-xl font-bold">Cycle Mood Tracker</h1>
+            <p className="text-rose-100 text-sm">Track your journey</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="pb-20">
+        <ActiveComponent />
+      </div>
+
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-sm bg-white border-t border-gray-200">
+        <div className="flex">
+          {tabs.map(tab => {
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex-1 p-4 flex flex-col items-center space-y-1 transition-colors ${
+                  activeTab === tab.id 
+                    ? 'text-rose-500 bg-rose-50' 
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+                <span className="text-xs font-medium">{tab.name}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MenstrualMoodTracker;
