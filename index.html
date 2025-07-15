@@ -30,6 +30,8 @@
             background-repeat: no-repeat;
             background-attachment: fixed; /* This creates the parallax effect */
             position: relative;
+            /* Hero background animation */
+            animation: heroZoomPan 30s infinite alternate ease-in-out;
         }
         .hero-bg::before {
             content: "";
@@ -39,6 +41,18 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(to right, rgba(26, 77, 125, 0.9) 0%, rgba(26, 77, 125, 0.7) 50%, rgba(26, 77, 125, 0.5) 100%); /* Overlay for readability */
+        }
+
+        /* Keyframe animation for subtle zoom/pan effect on hero background */
+        @keyframes heroZoomPan {
+            0% {
+                background-size: 100%;
+                background-position: center center;
+            }
+            100% {
+                background-size: 110%;
+                background-position: center right;
+            }
         }
 
         /* Loading spinner CSS (kept for potential future use or other features) */
@@ -55,9 +69,54 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
         /* Styles for dropdown menu */
         .group:hover .group-hover\:block {
             display: block;
+        }
+
+        /* Scroll-triggered animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Delay for sequential animations (adjust as needed for specific layouts) */
+        .animate-on-scroll:nth-child(1) { transition-delay: 0s; }
+        .animate-on-scroll:nth-child(2) { transition-delay: 0.1s; }
+        .animate-on-scroll:nth-child(3) { transition-delay: 0.2s; }
+        .animate-on-scroll:nth-child(4) { transition-delay: 0.3s; }
+        .animate-on-scroll:nth-child(5) { transition-delay: 0.4s; }
+        .animate-on-scroll:nth-child(6) { transition-delay: 0.5s; }
+        .animate-on-scroll:nth-child(7) { transition-delay: 0.6s; }
+        .animate-on-scroll:nth-child(8) { transition-delay: 0.7s; }
+        .animate-on-scroll:nth-child(9) { transition-delay: 0.8s; }
+        .animate-on-scroll:nth-child(10) { transition-delay: 0.9s; }
+        .animate-on-scroll:nth-child(11) { transition-delay: 1.0s; }
+        .animate-on-scroll:nth-child(12) { transition-delay: 1.1s; }
+
+
+        /* Enhanced hover effects for cards */
+        .hover-lift-shadow {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift-shadow:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Icon hover effect */
+        .icon-hover-scale {
+            transition: transform 0.3s ease;
+        }
+        .icon-hover-scale:hover {
+            transform: scale(1.15);
         }
     </style>
 </head>
@@ -124,44 +183,44 @@
     <!-- Who We Serve -->
     <section class="py-16 md:py-24 bg-white px-6">
         <div class="container mx-auto max-w-6xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Who We Serve</h2>
-            <p class="text-lg md:text-xl text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Who We Serve</h2>
+            <p class="text-lg md:text-xl text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
                 From ground-up construction to emergency retrofits, SWS Mechanical partners with general contractors, developers, and builders who demand technical depth, reliability, and zero excuses.
             </p>
 
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
-                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                    <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4">
+                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4 icon-hover-scale">
                         <span class="text-white text-3xl">🏠</span> <!-- Icon Placeholder -->
                     </div>
                     <span class="text-lg font-semibold text-sws-gray">Multifamily</span>
                 </div>
-                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                    <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4">
+                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4 icon-hover-scale">
                         <span class="text-white text-3xl">🏨</span> <!-- Icon Placeholder -->
                     </div>
                     <span class="text-lg font-semibold text-sws-gray">Hotels</span>
                 </div>
-                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                    <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4">
+                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4 icon-hover-scale">
                         <span class="text-white text-3xl">🍽️</span> <!-- Icon Placeholder -->
                     </div>
                     <span class="text-lg font-semibold text-sws-gray">Restaurants</span>
                 </div>
-                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                    <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4">
+                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4 icon-hover-scale">
                         <span class="text-white text-3xl">⚕️</span> <!-- Icon Placeholder -->
                     </div>
                     <span class="text-lg font-semibold text-sws-gray">Healthcare</span>
                 </div>
-                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                    <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4">
+                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4 icon-hover-scale">
                         <span class="text-white text-3xl">🏗️</span> <!-- Icon Placeholder -->
                     </div>
                     <span class="text-lg font-semibold text-sws-gray">New Builds</span>
                 </div>
-                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                    <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4">
+                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4 icon-hover-scale">
                         <span class="text-white text-3xl">🛠️</span> <!-- Icon Placeholder -->
                     </div>
                     <span class="text-lg font-semibold text-sws-gray">Renovation</span>
@@ -173,10 +232,10 @@
     <!-- Why SWS Mechanical? -->
     <section class="py-16 md:py-24 bg-sws-blue px-6">
         <div class="container mx-auto max-w-6xl text-white">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Why SWS Mechanical?</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 animate-on-scroll">Why SWS Mechanical?</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="p-8 rounded-xl bg-white bg-opacity-10 shadow-lg border border-white border-opacity-20 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-sws-orange rounded-full flex items-center justify-center mb-6">
+                <div class="p-8 rounded-xl bg-white bg-opacity-10 shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-16 h-16 bg-sws-orange rounded-full flex items-center justify-center mb-6 icon-hover-scale">
                         <span class="text-white text-3xl">✅</span> <!-- Icon Placeholder -->
                     </div>
                     <h3 class="text-2xl font-semibold mb-4">Proven Track Record</h3>
@@ -184,8 +243,8 @@
                         Over 200 major projects delivered on time and on budget. Our clients return because we make their jobs easier, not harder.
                     </p>
                 </div>
-                <div class="p-8 rounded-xl bg-white bg-opacity-10 shadow-lg border border-white border-opacity-20 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-sws-orange rounded-full flex items-center justify-center mb-6">
+                <div class="p-8 rounded-xl bg-white bg-opacity-10 shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-16 h-16 bg-sws-orange rounded-full flex items-center justify-center mb-6 icon-hover-scale">
                         <span class="text-white text-3xl">⚙️</span> <!-- Icon Placeholder -->
                     </div>
                     <h3 class="text-2xl font-semibold mb-4">Technical Mastery</h3>
@@ -193,8 +252,8 @@
                         Licensed, bonded, OSHA-certified, and fluent in BIM and value engineering. We don’t just meet code—we set the standard.
                     </p>
                 </div>
-                <div class="p-8 rounded-xl bg-white bg-opacity-10 shadow-lg border border-white border-opacity-20 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-sws-orange rounded-full flex items-center justify-center mb-6">
+                <div class="p-8 rounded-xl bg-white bg-opacity-10 shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-16 h-16 bg-sws-orange rounded-full flex items-center justify-center mb-6 icon-hover-scale">
                         <span class="text-white text-3xl">🤝</span> <!-- Icon Placeholder -->
                     </div>
                     <h3 class="text-2xl font-semibold mb-4">Integrity & Work Ethic</h3>
@@ -202,8 +261,8 @@
                         We operate with unwavering honesty, transparency, and a strong work ethic, building trust with every client and project.
                     </p>
                 </div>
-                <div class="p-8 rounded-xl bg-white bg-opacity-10 shadow-lg border border-white border-opacity-20 flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-sws-orange rounded-full flex items-center justify-center mb-6">
+                <div class="p-8 rounded-xl bg-white bg-opacity-10 shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-16 h-16 bg-sws-orange rounded-full flex items-center justify-center mb-6 icon-hover-scale">
                         <span class="text-white text-3xl">👷‍♀️</span> <!-- Icon Placeholder -->
                     </div>
                     <h3 class="text-2xl font-semibold mb-4">Safety First</h3>
@@ -218,10 +277,13 @@
     <!-- Featured Projects (from main page) -->
     <section class="py-16 md:py-24 bg-white px-6">
         <div class="container mx-auto max-w-6xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Featured Projects</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Featured Projects</h2>
+            <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10 animate-on-scroll">
+                Showcasing our expertise across diverse commercial and multifamily sectors.
+            </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <!-- Project 1 -->
-                <div class="bg-gray-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden">
+                <div class="bg-gray-100 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/low-angle-shot-beautiful-historical-architectural-structure-paris-france_181624-22776.jpg" alt="The Monarch Apartments" class="w-full h-56 object-cover rounded-t-xl">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-sws-blue mb-3">The Monarch Apartments</h3>
@@ -230,7 +292,7 @@
                     </div>
                 </div>
                 <!-- Project 2 -->
-                <div class="bg-gray-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden">
+                <div class="bg-gray-100 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/view-geometric-buildings_1112-802.jpg" alt="Salt Lake City Medical Center" class="w-full h-56 object-cover rounded-t-xl">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-sws-blue mb-3">Salt Lake City Medical Center</h3>
@@ -239,7 +301,7 @@
                     </div>
                 </div>
                 <!-- Project 3 -->
-                <div class="bg-gray-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden">
+                <div class="bg-gray-100 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/aerial-shot-aria-hotel-las-vegas_181624-42881.jpg" alt="Hilton Downtown" class="w-full h-56 object-cover rounded-t-xl">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-sws-blue mb-3">Hilton Downtown</h3>
@@ -248,15 +310,18 @@
                     </div>
                 </div>
             </div>
+            <div class="text-center mt-16 animate-on-scroll">
+                <a href="#our-projects" class="bg-sws-blue text-white py-3 px-8 rounded-lg shadow-xl hover:bg-blue-800 transition duration-300 font-semibold">View All Projects</a>
+            </div>
         </div>
     </section>
 
     <!-- Testimonials -->
     <section class="py-16 md:py-24 bg-sws-gray px-6">
         <div class="container mx-auto max-w-4xl text-white">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">What Our Partners Say</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 animate-on-scroll">What Our Partners Say</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="bg-white bg-opacity-10 rounded-xl shadow-lg p-8 border border-white border-opacity-20">
+                <div class="bg-white bg-opacity-10 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <p class="text-lg md:text-xl italic mb-6">
                         “SWS Mechanical is the only contractor I trust when the schedule is tight and the stakes are high.”
                     </p>
@@ -264,7 +329,7 @@
                         — Project Executive, Big Mountain Construction
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 rounded-xl shadow-lg p-8 border border-white border-opacity-20">
+                <div class="bg-white bg-opacity-10 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <p class="text-lg md:text-xl italic mb-6">
                         “They solved problems on our multifamily build that left other contractors stumped. On time, on budget, no drama.”
                     </p>
@@ -279,16 +344,16 @@
     <!-- Certifications & Affiliations -->
     <section class="py-16 md:py-24 bg-white px-6">
         <div class="container mx-auto max-w-6xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Credentials & Affiliations</h2>
-            <p class="text-lg md:text-xl text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Credentials & Affiliations</h2>
+            <p class="text-lg md:text-xl text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
                 Licensed Utah Contractor | OSHA | ABC | PHCC
             </p>
             <div class="flex flex-wrap justify-center items-center gap-8">
                 <!-- Placeholder Logos/Badges -->
-                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=UT+Contractor" alt="Licensed Utah Contractor" class="h-16 rounded-lg shadow-md">
-                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=OSHA" alt="OSHA" class="h-16 rounded-lg shadow-md">
-                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=ABC" alt="ABC" class="h-16 rounded-lg shadow-md">
-                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=PHCC" alt="PHCC" class="h-16 rounded-lg shadow-md">
+                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=UT+Contractor" alt="Licensed Utah Contractor" class="h-16 rounded-lg shadow-md hover-lift-shadow animate-on-scroll">
+                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=OSHA" alt="OSHA" class="h-16 rounded-lg shadow-md hover-lift-shadow animate-on-scroll">
+                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=ABC" alt="ABC" class="h-16 rounded-lg shadow-md hover-lift-shadow animate-on-scroll">
+                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=PHCC" alt="PHCC" class="h-16 rounded-lg shadow-md hover-lift-shadow animate-on-scroll">
             </div>
         </div>
     </section>
@@ -296,46 +361,46 @@
     <!-- Process Overview -->
     <section class="py-16 md:py-24 bg-gray-50 px-6">
         <div class="container mx-auto max-w-6xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">How We Work</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">How We Work</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg">
-                    <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4">1</div>
+                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4 icon-hover-scale">1</div>
                     <div>
                         <h3 class="text-xl font-semibold text-sws-blue mb-2">Pre-construction planning & BIM modeling</h3>
                         <p class="text-sws-gray">Detailed upfront planning using Building Information Modeling to ensure precision and efficiency.</p>
                     </div>
                 </div>
-                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg">
-                    <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4">2</div>
+                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4 icon-hover-scale">2</div>
                     <div>
                         <h3 class="text-xl font-semibold text-sws-blue mb-2">Transparent, detailed bidding</h3>
                         <p class="text-sws-gray">Clear and comprehensive bids with no hidden costs, giving you full financial clarity.</p>
                     </div>
                 </div>
-                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg">
-                    <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4">3</div>
+                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4 icon-hover-scale">3</div>
                     <div>
                         <h3 class="text-xl font-semibold text-sws-blue mb-2">Dedicated project management</h3>
                         <p class="text-sws-gray">A single point of contact ensures seamless communication and project execution.</p>
                     </div>
                 </div>
-                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg">
-                    <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4">4</div>
+                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4 icon-hover-scale">4</div>
                     <div>
                         <h3 class="text-xl font-semibold text-sws-blue mb-2">On-time, on-budget delivery</h3>
                         <p class="text-sws-gray">Commitment to delivering projects within agreed timelines and financial parameters.</p>
                     </div>
                 </div>
-                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg">
-                    <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4">5</div>
+                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4 icon-hover-scale">5</div>
                     <div>
                         <h3 class="text-xl font-semibold text-sws-blue mb-2">Ongoing service & support</h3>
                         <p class="text-sws-gray">Post-completion support and maintenance to ensure long-term system performance.</p>
                     </div>
                 </div>
                 <!-- New 6th Step: Safety -->
-                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg">
-                    <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4">6</div>
+                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4 icon-hover-scale">6</div>
                     <div>
                         <h3 class="text-xl font-semibold text-sws-blue mb-2">Rigorous Safety Protocols</h3>
                         <p class="text-sws-gray">Adherence to industry-leading safety standards and continuous training for a secure job site.</p>
@@ -348,9 +413,9 @@
     <!-- About Us Section (from sws-about-page) -->
     <section id="about-us" class="py-16 md:py-24 bg-white px-6">
         <div class="container mx-auto max-w-6xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">About SWS Mechanical</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">About SWS Mechanical</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-lg leading-relaxed text-sws-gray">
+                <div class="text-lg leading-relaxed text-sws-gray animate-on-scroll">
                     <h3 class="text-2xl font-semibold text-sws-blue mb-4">Our Story</h3>
                     <p class="mb-6">
                         Founded with a vision to deliver unparalleled plumbing and mechanical services, SWS Mechanical has grown to become a trusted leader in Utah's construction industry. For years, we've partnered with top general contractors, developers, and property managers, building a reputation for technical precision, uncompromising reliability, and a commitment to safety that sets us apart.
@@ -362,14 +427,14 @@
                         We pride ourselves on our team of highly skilled and certified professionals, who are not just experts in their craft but also embody our values of integrity, accountability, and continuous improvement. At SWS Mechanical, we're not just installing pipes; we're building lasting relationships and contributing to the growth and success of our community.
                     </p>
                 </div>
-                <div>
+                <div class="animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/working-with-blueprint_1098-14292.jpg" alt="SWS Mechanical Team" class="w-full h-auto rounded-xl shadow-lg">
                 </div>
             </div>
 
             <div class="mt-20">
-                <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Our Mission</h2>
-                <div class="max-w-4xl mx-auto text-center text-lg leading-relaxed text-sws-gray p-8 bg-gray-50 rounded-xl shadow-md">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Our Mission</h2>
+                <div class="max-w-4xl mx-auto text-center text-lg leading-relaxed text-sws-gray p-8 bg-gray-50 rounded-xl shadow-md animate-on-scroll">
                     <p>
                         To provide superior plumbing and mechanical solutions for commercial and multifamily projects, ensuring exceptional quality, timely delivery, and unwavering commitment to safety and client satisfaction. We aim to be the partner of choice for those who demand excellence.
                     </p>
@@ -377,17 +442,17 @@
             </div>
 
             <div class="mt-20">
-                <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Our Values</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Our Values</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <div class="p-6 bg-sws-blue text-white rounded-xl shadow-md">
+                    <div class="p-6 bg-sws-blue text-white rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h3 class="text-2xl font-semibold mb-3">Integrity</h3>
                         <p class="text-base">Operating with honesty and transparency in all our dealings.</p>
                     </div>
-                    <div class="p-6 bg-sws-blue text-white rounded-xl shadow-md">
+                    <div class="p-6 bg-sws-blue text-white rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h3 class="text-2xl font-semibold mb-3">Excellence</h3>
                         <p class="text-base">Delivering the highest quality workmanship and innovative solutions.</p>
                     </div>
-                    <div class="p-6 bg-sws-blue text-white rounded-xl shadow-md">
+                    <div class="p-6 bg-sws-blue text-white rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h3 class="text-2xl font-semibold mb-3">Safety</h3>
                         <p class="text-base">Prioritizing the well-being of our team, clients, and community.</p>
                     </div>
@@ -399,43 +464,43 @@
     <!-- Services Overview Section -->
     <section id="our-services" class="py-16 md:py-24 bg-sws-gray px-6">
         <div class="container mx-auto max-w-6xl text-white">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Our Comprehensive Services</h2>
-            <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 animate-on-scroll">Our Comprehensive Services</h2>
+            <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10 animate-on-scroll">
                 Delivering tailored plumbing and mechanical solutions for every project.
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <h3 class="text-2xl font-semibold mb-4">Commercial Plumbing</h3>
                     <p class="leading-relaxed">
                         From intricate pipe installations to large-scale system designs, we handle all aspects of commercial plumbing for new constructions and renovations.
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <h3 class="text-2xl font-semibold mb-4">Multifamily Plumbing</h3>
                     <p class="leading-relaxed">
                         Specializing in efficient and reliable plumbing solutions for apartment complexes, condominiums, and other multi-unit residential buildings.
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <h3 class="text-2xl font-semibold mb-4">Mechanical System Installation</h3>
                     <p class="leading-relaxed">
                         Expert installation of HVAC and other mechanical systems, ensuring optimal climate control and operational efficiency for your facilities.
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <h3 class="text-2xl font-semibold mb-4">Responsive Service</h3>
                     <p class="leading-relaxed">
                         Our dedicated teams provide timely and efficient service to address your plumbing and mechanical needs during business hours.
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <h3 class="text-2xl font-semibold mb-4">Preventative Maintenance</h3>
                     <p class="leading-relaxed">
                         Proactive maintenance plans designed to identify and address potential issues before they become costly problems, extending system lifespan.
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <h3 class="text-2xl font-semibold mb-4">BIM & Value Engineering</h3>
                     <p class="leading-relaxed">
                         Leveraging Building Information Modeling (BIM) and value engineering to optimize designs, reduce costs, and enhance project efficiency.
@@ -449,9 +514,9 @@
     <!-- Boiler Installation Section -->
     <section id="boiler-installation-section" class="py-16 md:py-24 bg-white px-6">
         <div class="container mx-auto max-w-6xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Boiler Installation & Service</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Boiler Installation & Service</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-lg leading-relaxed text-sws-gray">
+                <div class="text-lg leading-relaxed text-sws-gray animate-on-scroll">
                     <p class="mb-6">
                         At SWS Mechanical, we understand that a reliable boiler system is critical for the operational efficiency and comfort of your commercial or industrial facility. We specialize in comprehensive boiler services, from meticulous installation of new units to expert repair and proactive maintenance for all makes and models.
                     </p>
@@ -462,26 +527,26 @@
                         We ensure every installation is performed with precision, adhering to the highest safety standards and local regulations. Our commitment extends beyond installation, offering ongoing maintenance plans to maximize your boiler's lifespan, prevent costly breakdowns, and ensure consistent, efficient performance year-round.
                     </p>
                 </div>
-                <div>
+                <div class="animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/steel-pipelines-cables-plant_1359-148.jpg" alt="Commercial Boiler Room" class="w-full h-auto rounded-xl shadow-lg">
                 </div>
             </div>
             <div class="mt-20">
-                <h3 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Our Boiler Services Include:</h3>
+                <h3 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Our Boiler Services Include:</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">New Boiler System Installation</h4>
                         <p class="text-base text-sws-gray">Custom design and seamless installation of high-efficiency commercial boilers.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Boiler Repair & Troubleshooting</h4>
                         <p class="text-base text-sws-gray">Rapid and effective diagnostics and repair for all types of commercial boiler issues.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Preventative Maintenance Programs</h4>
                         <p class="text-base text-sws-gray">Scheduled inspections and servicing to optimize performance and extend equipment life.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Boiler Upgrades & Replacements</h4>
                         <p class="text-base text-sws-gray">Expert advice and execution for upgrading to more modern, efficient boiler technologies.</p>
                     </div>
@@ -493,9 +558,9 @@
     <!-- Specialty Pumps Section -->
     <section id="specialty-pumps-section" class="py-16 md:py-24 bg-sws-gray px-6">
         <div class="container mx-auto max-w-6xl text-white">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Specialty Pump Solutions</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 animate-on-scroll">Specialty Pump Solutions</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-lg leading-relaxed">
+                <div class="text-lg leading-relaxed animate-on-scroll">
                     <p class="mb-6">
                         In many commercial and industrial environments, standard pumping solutions simply aren't enough. SWS Mechanical specializes in the design, installation, and maintenance of specialty pump systems engineered for critical applications where precision, durability, and uninterrupted operation are paramount.
                     </p>
@@ -506,26 +571,26 @@
                         Our commitment extends to long-term reliability. We provide expert servicing and preventative maintenance to ensure your specialty pumps operate at peak efficiency, minimizing downtime and protecting your valuable processes.
                     </p>
                 </div>
-                <div>
+                <div class="animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/closeup-view-cylindrical-grinder-industrial-concept_181624-17731.jpg" alt="Industrial Pump System" class="w-full h-auto rounded-xl shadow-lg">
                 </div>
             </div>
             <div class="mt-20">
-                <h3 class="text-3xl md:text-4xl font-bold text-center mb-12">Our Specialty Pump Services Include:</h3>
+                <h3 class="text-3xl md:text-4xl font-bold text-center mb-12 animate-on-scroll">Our Specialty Pump Services Include:</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold mb-3">Custom Pump System Design</h4>
                         <p class="text-base">Tailored solutions for unique fluid transfer challenges and specific industrial processes.</p>
                     </div>
-                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold mb-3">High-Performance Pump Installation</h4>
                         <p class="text-base">Precise installation of specialized pumps for optimal efficiency and longevity.</p>
                     </div>
-                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold mb-3">Pump Maintenance & Repair</h4>
                         <p class="text-base">Proactive servicing and expert repairs to ensure continuous, reliable operation.</p>
                     </div>
-                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold mb-3">System Integration & Optimization</h4>
                         <p class="text-base">Seamless integration of new pumps into existing mechanical systems for enhanced performance.</p>
                     </div>
@@ -537,9 +602,9 @@
     <!-- Specialty Equipment Piping Section -->
     <section id="specialty-equipment-piping-section" class="py-16 md:py-24 bg-white px-6">
         <div class="container mx-auto max-w-6xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Specialty Equipment Piping</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Specialty Equipment Piping</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-lg leading-relaxed text-sws-gray">
+                <div class="text-lg leading-relaxed text-sws-gray animate-on-scroll">
                     <p class="mb-6">
                         SWS Mechanical recognizes that many industrial and commercial operations rely on highly specialized equipment that demands equally specialized piping systems. We provide comprehensive services for specialty equipment piping, encompassing expert design, precise installation, and diligent maintenance to ensure seamless and optimized equipment operation.
                     </p>
@@ -550,26 +615,26 @@
                         With deep technical expertise and local insight, SWS Mechanical is your trusted partner for complex piping challenges. We are committed to delivering solutions that enhance efficiency, minimize risk, and support the long-term success of your specialized processes.
                     </p>
                 </div>
-                <div>
+                <div class="animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/modern-autonomous-heating-system-boiler-room_169016-51491.jpg" alt="Specialty Piping Installation" class="w-full h-auto rounded-xl shadow-lg">
                 </div>
             </div>
             <div class="mt-20">
-                <h3 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Our Specialty Piping Services Include:</h3>
+                <h3 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Our Specialty Piping Services Include:</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Custom System Design & Engineering</h4>
                         <p class="text-base text-sws-gray">Tailored piping designs to integrate seamlessly with your unique equipment and processes.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Precision Installation & Fabrication</h4>
                         <p class="text-base text-sws-gray">Expert installation with meticulous attention to detail, including custom fabrication when required.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Regulatory Compliance & Safety</h4>
                         <p class="text-base text-sws-gray">Ensuring all piping systems meet industry standards and local safety regulations.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Ongoing Maintenance & Support</h4>
                         <p class="text-base text-sws-gray">Scheduled maintenance and responsive support to maximize system lifespan and performance.</p>
                     </div>
@@ -581,9 +646,9 @@
     <!-- Hydronic Systems Section -->
     <section id="hydronic-systems-section" class="py-16 md:py-24 bg-sws-gray px-6">
         <div class="container mx-auto max-w-6xl text-white">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Hydronic Systems</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 animate-on-scroll">Hydronic Systems</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-lg leading-relaxed">
+                <div class="text-lg leading-relaxed animate-on-scroll">
                     <p class="mb-6">
                         SWS Mechanical specializes in the design, installation, and maintenance of advanced hydronic systems, offering highly efficient and comfortable heating and cooling solutions for a wide range of commercial and multifamily applications. These systems leverage the power of water or other fluids circulated through a network of pipes to precisely control indoor temperatures.
                     </p>
@@ -594,26 +659,26 @@
                         We pride ourselves on delivering high-quality, reliable hydronic solutions that enhance safety, reduce operational costs, and minimize environmental impact for properties across Utah.
                     </p>
                 </div>
-                <div>
+                <div class="animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/modern-autonomous-heating-system-boiler-room_169016-51318.jpg" alt="Hydronic System Installation" class="w-full h-auto rounded-xl shadow-lg">
                 </div>
             </div>
             <div class="mt-20">
-                <h3 class="text-3xl md:text-4xl font-bold text-center mb-12">Our Hydronic System Services Include:</h3>
+                <h3 class="text-3xl md:text-4xl font-bold text-center mb-12 animate-on-scroll">Our Hydronic System Services Include:</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold mb-3">Custom Hydronic System Design</h4>
                         <p class="text-base">Tailored designs for radiant heating, cooling, and integrated climate control.</p>
                     </div>
-                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold mb-3">Efficient Installation & Integration</h4>
                         <p class="text-base">Expert installation ensuring seamless integration and optimal energy performance.</p>
                     </div>
-                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold mb-3">System Optimization & Controls</h4>
                         <p class="text-base">Advanced electronic controls and sensors for precise temperature management and energy efficiency.</p>
                     </div>
-                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold mb-3">Scheduled Maintenance & Support</h4>
                         <p class="text-base">Proactive maintenance programs to ensure long-term reliability and peak efficiency.</p>
                     </div>
@@ -625,9 +690,9 @@
     <!-- Chilled Water Systems Section -->
     <section id="chilled-water-systems-section" class="py-16 md:py-24 bg-white px-6">
         <div class="container mx-auto max-w-6xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Chilled Water Systems</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Chilled Water Systems</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-lg leading-relaxed text-sws-gray">
+                <div class="text-lg leading-relaxed text-sws-gray animate-on-scroll">
                     <p class="mb-6">
                         SWS Mechanical specializes in the expert installation and optimization of chilled water systems, understanding their pivotal role in maintaining comfortable environments, preserving product integrity, and ensuring the efficiency of various industrial processes. Chilled water systems effectively cool desired spaces by transferring heat from one location to another using a chilled water loop.
                     </p>
@@ -638,26 +703,26 @@
                         From large commercial complexes to specialized industrial facilities, SWS Mechanical delivers robust and sustainable chilled water solutions, ensuring consistent performance and long-term operational savings.
                     </p>
                 </div>
-                <div>
+                <div class="animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/steel-pipelines-cables-plant_1359-188.jpg" alt="Chiller Installation Site" class="w-full h-auto rounded-xl shadow-lg">
                 </div>
             </div>
             <div class="mt-20">
-                <h3 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Our Chilled Water System Services Include:</h3>
+                <h3 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Our Chilled Water System Services Include:</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Custom Chiller System Design</h4>
                         <p class="text-base text-sws-gray">Tailored cooling solutions optimized for your facility's unique demands and energy goals.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Professional Chiller Installation</h4>
                         <p class="text-base text-sws-gray">Expert installation of all types of chillers, ensuring seamless integration and peak performance.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Energy Efficiency Optimization</h4>
                         <p class="text-base text-sws-gray">Strategies and technologies to maximize energy efficiency and reduce operational costs.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Maintenance & Compliance</h4>
                         <p class="text-base text-sws-gray">Regular servicing to ensure system longevity and adherence to all safety and environmental regulations.</p>
                     </div>
@@ -669,9 +734,9 @@
     <!-- Snow Melt Systems Section -->
     <section id="snow-melt-systems-section" class="py-16 md:py-24 bg-sws-gray px-6">
         <div class="container mx-auto max-w-6xl text-white">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Snow Melt Systems</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 animate-on-scroll">Snow Melt Systems</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-lg leading-relaxed">
+                <div class="text-lg leading-relaxed animate-on-scroll">
                     <p class="mb-6">
                         In regions with challenging winter weather, maintaining clear and safe walkways, driveways, and critical access points is paramount. SWS Mechanical specializes in the design, installation, and maintenance of automated snow melt systems, ensuring your commercial and multifamily properties remain accessible and secure during the coldest months.
                     </p>
@@ -682,26 +747,26 @@
                         We provide customized system designs, precise installations, and regular maintenance to guarantee long-term performance, energy efficiency, and adherence to all industry standards and local regulations. Trust SWS Mechanical to keep your property clear and safe, even in the harshest winter conditions.
                     </p>
                 </div>
-                <div>
+                <div class="animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/ground-covered-snow_181624-6136.jpg" alt="Snow Melt Pipes" class="w-full h-auto rounded-xl shadow-lg">
                 </div>
             </div>
             <div class="mt-20">
-                <h3 class="text-3xl md:text-4xl font-bold text-center mb-12">Benefits of SWS Snow Melt Systems:</h3>
+                <h3 class="text-3xl md:text-4xl font-bold text-center mb-12 animate-on-scroll">Benefits of SWS Snow Melt Systems:</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold mb-3">Enhanced Safety</h4>
                         <p class="text-base">Eliminates hazardous ice and snow, reducing slip-and-fall risks for occupants and visitors.</p>
                     </div>
-                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold mb-3">Automated Convenience</h4>
                         <p class="text-base">Provides automated snow removal, freeing up staff and resources from manual clearing.</p>
                     </div>
-                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold mb-3">Cost Savings</h4>
                         <p class="text-base">Reduces labor costs, equipment wear, and potential property damage from plowing and de-icing chemicals.</p>
                     </div>
-                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+                    <div class="bg-white bg-opacity-10 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold mb-3">Property Preservation</h4>
                         <p class="text-base">Protects concrete, asphalt, and landscaping from corrosive salts and physical damage.</p>
                     </div>
@@ -713,9 +778,9 @@
     <!-- Steam Piping Systems Section -->
     <section id="steam-piping-systems-section" class="py-16 md:py-24 bg-white px-6">
         <div class="container mx-auto max-w-6xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Steam Piping Systems</h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Steam Piping Systems</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-lg leading-relaxed text-sws-gray">
+                <div class="text-lg leading-relaxed text-sws-gray animate-on-scroll">
                     <p class="mb-6">
                         SWS Mechanical specializes in the meticulous design, precise installation, and comprehensive maintenance of commercial and industrial steam piping systems. These systems are fundamental for operations requiring efficient power generation and precise thermal control, making them indispensable across various sectors.
                     </p>
@@ -726,26 +791,26 @@
                         We offer end-to-end services, from initial system design to installation and regular preventative maintenance, all while ensuring the highest levels of efficiency, safety, and strict compliance with industry standards and local regulations. SWS Mechanical is a trusted partner for industrial facilities in Utah, committed to delivering reliable and high-performance steam solutions.
                     </p>
                 </div>
-                <div>
+                <div class="animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/cheese-industry-interior-production-hard-cheese-background_645730-198.jpg" alt="Steam Piping Installation" class="w-full h-auto rounded-xl shadow-lg">
                 </div>
             </div>
             <div class="mt-20">
-                <h3 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Our Steam Piping Services Include:</h3>
+                <h3 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Our Steam Piping Services Include:</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Custom Steam System Design</h4>
                         <p class="text-base text-sws-gray">Tailored design for new installations and upgrades, focusing on efficiency and safety.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Precision Installation & Fabrication</h4>
                         <p class="text-base text-sws-gray">Expert installation of high-pressure steam lines, including custom fabrication.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Regular Maintenance & Repair</h4>
                         <p class="text-base text-sws-gray">Proactive servicing and rapid response repairs to ensure system integrity and performance.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Safety & Regulatory Compliance</h4>
                         <p class="text-base text-sws-gray">Ensuring all steam systems meet stringent safety standards and local regulations.</p>
                     </div>
@@ -757,13 +822,13 @@
     <!-- Projects Section (from sws-projects-page) -->
     <section id="our-projects" class="py-16 md:py-24 bg-white px-6">
         <div class="container mx-auto max-w-6xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Our Completed Projects</h2>
-            <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Our Completed Projects</h2>
+            <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10 animate-on-scroll">
                 Showcasing our expertise across diverse commercial and multifamily sectors.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <!-- Project 1 -->
-                <div class="bg-gray-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden">
+                <div class="bg-gray-100 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/low-angle-shot-beautiful-historical-architectural-structure-paris-france_181624-22776.jpg" alt="The Monarch Apartments" class="w-full h-56 object-cover rounded-t-xl">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-sws-blue mb-3">The Monarch Apartments</h3>
@@ -772,7 +837,7 @@
                     </div>
                 </div>
                 <!-- Project 2 -->
-                <div class="bg-gray-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden">
+                <div class="bg-gray-100 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/view-geometric-buildings_1112-802.jpg" alt="Salt Lake City Medical Center" class="w-full h-56 object-cover rounded-t-xl">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-sws-blue mb-3">Salt Lake City Medical Center</h3>
@@ -781,7 +846,7 @@
                     </div>
                 </div>
                 <!-- Project 3 -->
-                <div class="bg-gray-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden">
+                <div class="bg-gray-100 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/aerial-shot-aria-hotel-las-vegas_181624-42881.jpg" alt="Hilton Downtown" class="w-full h-56 object-cover rounded-t-xl">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-sws-blue mb-3">Hilton Downtown</h3>
@@ -790,8 +855,8 @@
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-16">
-                <a href="#our-projects" class="bg-sws-blue text-white py-3 px-8 rounded-lg shadow-xl hover:bg-blue-800 transition duration-300 text-lg font-semibold">View All Projects</a>
+            <div class="text-center mt-16 animate-on-scroll">
+                <a href="#our-projects" class="bg-sws-blue text-white py-3 px-8 rounded-lg shadow-xl hover:bg-blue-800 transition duration-300 font-semibold">View All Projects</a>
             </div>
         </div>
     </section>
@@ -799,13 +864,13 @@
     <!-- Industries Section (from sws-industries-page) -->
     <section id="industries-we-serve" class="py-16 md:py-24 bg-sws-blue px-6">
         <div class="container mx-auto max-w-6xl text-white">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Serving Diverse Industries</h2>
-            <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 animate-on-scroll">Serving Diverse Industries</h2>
+            <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10 animate-on-scroll">
                 Tailored mechanical and plumbing solutions for specialized sector needs.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center">
-                    <div class="w-20 h-20 bg-sws-orange text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-20 h-20 bg-sws-orange text-white rounded-full flex items-center justify-center mx-auto mb-6 icon-hover-scale">
                         <span class="text-4xl">🏠</span> <!-- Icon Placeholder -->
                     </div>
                     <h3 class="text-2xl font-semibold mb-4">Multifamily</h3>
@@ -813,8 +878,8 @@
                         Expert plumbing and mechanical for apartment complexes, condominiums, and multi-unit residential buildings.
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center">
-                    <div class="w-20 h-20 bg-sws-orange text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-20 h-20 bg-sws-orange text-white rounded-full flex items-center justify-center mx-auto mb-6 icon-hover-scale">
                         <span class="text-4xl">🏨</span> <!-- Icon Placeholder -->
                     </div>
                     <h3 class="text-2xl font-semibold mb-4">Hotels & Hospitality</h3>
@@ -822,8 +887,8 @@
                         Reliable systems ensuring comfort and efficiency for hotels, resorts, and other hospitality venues.
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center">
-                    <div class="w-20 h-20 bg-sws-orange text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-20 h-20 bg-sws-orange text-white rounded-full flex items-center justify-center mx-auto mb-6 icon-hover-scale">
                         <span class="text-4xl">🍽️</span> <!-- Icon Placeholder -->
                     </div>
                     <h3 class="text-2xl font-semibold mb-4">Restaurants & Food Service</h3>
@@ -831,8 +896,8 @@
                         Specialized plumbing for commercial kitchens, grease traps, and waste disposal systems.
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center">
-                    <div class="w-20 h-20 bg-sws-orange text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-20 h-20 bg-sws-orange text-white rounded-full flex items-center justify-center mx-auto mb-6 icon-hover-scale">
                         <span class="text-4xl">⚕️</span> <!-- Icon Placeholder -->
                     </div>
                     <h3 class="text-2xl font-semibold mb-4">Healthcare Facilities</h3>
@@ -840,8 +905,8 @@
                         Precision plumbing for hospitals, clinics, and medical research facilities, meeting stringent health codes.
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center">
-                    <div class="w-20 h-20 bg-sws-orange text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-20 h-20 bg-sws-orange text-white rounded-full flex items-center justify-center mx-auto mb-6 icon-hover-scale">
                         <span class="text-4xl">🏢</span> <!-- Icon Placeholder -->
                     </div>
                     <h3 class="text-2xl font-semibold mb-4">Commercial & Office Buildings</h3>
@@ -849,8 +914,8 @@
                         Comprehensive mechanical and plumbing systems for modern office spaces and commercial complexes.
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center">
-                    <div class="w-20 h-20 bg-sws-orange text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                    <div class="w-20 h-20 bg-sws-orange text-white rounded-full flex items-center justify-center mx-auto mb-6 icon-hover-scale">
                         <span class="text-4xl">🏫</span> <!-- Icon Placeholder -->
                     </div>
                     <h3 class="text-2xl font-semibold mb-4">Educational Institutions</h3>
@@ -865,12 +930,12 @@
     <!-- Safety Section (from sws-safety-page) -->
     <section id="safety-commitment" class="py-16 md:py-24 bg-white px-6">
         <div class="container mx-auto max-w-6xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Safety First, Always.</h2>
-            <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Safety First, Always.</h2>
+            <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10 animate-on-scroll">
                 Our unwavering commitment to a secure and incident-free worksite.
             </p>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="text-lg leading-relaxed text-sws-gray">
+                <div class="text-lg leading-relaxed text-sws-gray animate-on-scroll">
                     <h3 class="text-2xl font-semibold text-sws-blue mb-4">Our Commitment to Safety Excellence</h3>
                     <p class="mb-6">
                         At SWS Mechanical, safety is not just a policy; it's a fundamental aspect of our culture and an integral part of every project we undertake. We believe that a safe worksite is a productive worksite, and our commitment to protecting our employees, clients, and the public is absolute.
@@ -882,23 +947,23 @@
                         We are proud of our industry-leading safety record, marked by zero lost-time incidents in the last three years. This achievement is a testament to our proactive approach, daily safety briefings, regular site inspections, and the unwavering dedication of every SWS Mechanical team member to follow best practices. Your project's safety and schedule are our top priorities.
                     </p>
                 </div>
-                <div>
+                <div class="animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/three-people-discussing-plan-factory_1303-30624.jpg" alt="Safety Briefing" class="w-full h-auto rounded-xl shadow-lg">
                 </div>
             </div>
 
             <div class="mt-20">
-                <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Key Safety Pillars</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Key Safety Pillars</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
-                    <div class="p-6 bg-sws-blue text-white rounded-xl shadow-md">
+                    <div class="p-6 bg-sws-blue text-white rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h3 class="text-2xl font-semibold mb-3">Continuous Training</h3>
                         <p class="text-base">Regular safety drills, certifications, and updated training for all personnel.</p>
                     </div>
-                    <div class="p-6 bg-sws-blue text-white rounded-xl shadow-md">
+                    <div class="p-6 bg-sws-blue text-white rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h3 class="text-2xl font-semibold mb-3">Proactive Risk Management</h3>
                         <p class="text-base">Identifying and mitigating potential hazards before work begins.</p>
                     </div>
-                    <div class="p-6 bg-sws-blue text-white rounded-xl shadow-md">
+                    <div class="p-6 bg-sws-blue text-white rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h3 class="text-2xl font-semibold mb-3">Strict Compliance</h3>
                         <p class="text-base">Adherence to all OSHA regulations and industry best practices.</p>
                     </div>
@@ -910,30 +975,30 @@
     <!-- Careers Section (Updated Content) -->
     <section id="careers-with-us" class="py-16 md:py-24 bg-sws-gray px-6">
         <div class="container mx-auto max-w-6xl text-white">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Build Your Career with SWS Mechanical</h2>
-            <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 animate-on-scroll">Build Your Career with SWS Mechanical</h2>
+            <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10 animate-on-scroll">
                 Join a team committed to excellence, safety, and innovation.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <h3 class="text-2xl font-semibold mb-4">Growth Opportunities</h3>
                     <p class="leading-relaxed">
                         We invest in our employees' professional development, offering continuous training and clear paths for advancement.
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <h3 class="text-2xl font-semibold mb-4">Safety Culture</h3>
                     <p class="leading-relaxed">
                         Your well-being is our top priority. We maintain an industry-leading safety record and foster a culture of vigilance.
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <h3 class="text-2xl font-semibold mb-4">Team Environment</h3>
                     <p class="leading-relaxed">
                         Join a collaborative and supportive team where your contributions are valued and celebrated.
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <h3 class="text-2xl font-semibold mb-4">Competitive Benefits</h3>
                     <p class="leading-relaxed">
                         We offer a comprehensive benefits package, competitive wages, and opportunities for bonuses.
@@ -941,7 +1006,7 @@
                 </div>
             </div>
 
-            <div class="text-center mt-12">
+            <div class="text-center mt-12 animate-on-scroll">
                 <p class="text-lg">Interested in a career with SWS Mechanical? <a href="#contact-us" class="text-sws-orange hover:underline">Contact us</a> for more information on available positions.</p>
             </div>
         </div>
@@ -950,13 +1015,13 @@
     <!-- Contact Us Section (from sws-contact-page) -->
     <section id="contact-us" class="py-16 md:py-24 bg-gray-50 px-6">
         <div class="container mx-auto max-w-4xl">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Get in Touch</h2>
-            <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Get in Touch</h2>
+            <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10 animate-on-scroll">
                 Let's discuss your next project or any inquiries you may have.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <!-- Contact Information -->
-                <div>
+                <div class="animate-on-scroll">
                     <h3 class="text-2xl font-semibold text-sws-blue mb-6">Our Office</h3>
                     <address class="not-italic text-lg text-sws-gray mb-6">
                         SWS Mechanical<br>
@@ -977,7 +1042,7 @@
                 </div>
 
                 <!-- Contact Form -->
-                <div>
+                <div class="animate-on-scroll">
                     <h3 class="text-2xl font-semibold text-sws-blue mb-6">Send Us a Message</h3>
                     <form class="space-y-6">
                         <div>
@@ -1038,101 +1103,27 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // No Project Scope Assistant elements to initialize or listen to
-            // as the feature has been removed.
+            // Scroll-triggered animations
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
 
-            // Service Recommender elements (these are now the only AI elements)
-            const getServiceRecommendationBtn = document.getElementById('get-service-recommendation-btn');
-            const serviceProblemDescription = document.getElementById('service-problem-description');
-            const serviceRecommendationOutput = document.getElementById('service-recommendation-output');
-            const serviceLoadingSpinner = document.getElementById('service-loading-spinner');
-            const serviceButtonText = document.getElementById('service-button-text');
-
-            // Service Recommender Logic
-            if (getServiceRecommendationBtn && serviceProblemDescription && serviceRecommendationOutput && serviceLoadingSpinner && serviceButtonText) {
-                getServiceRecommendationBtn.addEventListener('click', async () => {
-                    const problem = serviceProblemDescription.value.trim();
-                    if (!problem) {
-                        serviceRecommendationOutput.value = "Please describe your problem or need to get a service recommendation.";
-                        return;
-                    }
-
-                    // Show loading spinner and disable button
-                    serviceButtonText.classList.add('hidden');
-                    serviceLoadingSpinner.classList.remove('hidden');
-                    getServiceRecommendationBtn.disabled = true;
-                    serviceRecommendationOutput.value = ''; // Clear previous recommendations
-
-                    try {
-                        const servicesList = [
-                            "Boiler Installation & Service",
-                            "Specialty Pumps",
-                            "Specialty Equipment Piping",
-                            "Hydronic Systems",
-                            "Chilled Water Systems",
-                            "Snow Melt Systems",
-                            "Steam Piping Systems",
-                            "Commercial Plumbing",
-                            "Multifamily Plumbing",
-                            "Mechanical System Installation",
-                            "Preventative Maintenance",
-                            "BIM & Value Engineering"
-                        ].join(", ");
-
-                        const prompt = `A client has described a plumbing or mechanical problem/need. Based on the following list of services provided by SWS Mechanical, recommend the most relevant service(s) or ask a clarifying question if more information is needed.
-
-Available Services: ${servicesList}
-
-Client's Problem/Need: "${problem}"
-
-Recommendation:`;
-
-                        let chatHistory = [];
-                        chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                        const payload = { contents: chatHistory };
-                        const apiKey = ""; // Canvas will automatically provide the API key at runtime.
-                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                        const response = await fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-
-                        // Check if the response was successful
-                        if (!response.ok) {
-                            const errorText = await response.text();
-                            throw new Error(`HTTP error! status: ${response.status}, body: ${errorText}`);
-                        }
-
-                        const result = await response.json();
-
-                        if (result.candidates && result.candidates.length > 0 &&
-                            result.candidates[0].content && result.candidates[0].content.parts &&
-                            result.candidates[0].content.parts.length > 0) {
-                            const text = result.candidates[0].content.parts[0].text;
-                            serviceRecommendationOutput.value = text;
-                        } else {
-                            serviceRecommendationOutput.value = "Could not provide a recommendation. Please try again or provide more details.";
-                        }
-                    } catch (error) {
-                        console.error("Error calling Gemini API for service recommendation:", error);
-                        // Provide a more specific message for 401 Unauthorized errors
-                        if (error.message.includes("401")) {
-                            serviceRecommendationOutput.value = "Authentication error: The API key is missing or invalid. Please ensure your environment is correctly configured with a valid API key for the Gemini API.";
-                        } else {
-                            serviceRecommendationOutput.value = `An error occurred: ${error.message}. Please try again later.`;
-                        }
-                    } finally {
-                        // Hide loading spinner and enable button
-                        serviceLoadingSpinner.classList.add('hidden');
-                        serviceButtonText.classList.remove('hidden');
-                        getServiceRecommendationBtn.disabled = false;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // Optional: Unobserve after animation to save resources
+                        // observer.unobserve(entry.target);
+                    } else {
+                        // Optional: Remove class when out of view to re-trigger on scroll back
+                        // entry.target.classList.remove('is-visible');
                     }
                 });
-            } else {
-                console.error("One or more elements for the Service Recommender were not found.");
-            }
+            }, {
+                threshold: 0.2 // Trigger when 20% of the element is visible
+            });
+
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
         });
     </script>
 </body>
