@@ -1,16 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cycle Mood Tracker</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>" />
-    <style>
-      body { margin: 0; font-family: system-ui, sans-serif; background: #fafafa; }
-    </style>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cycle Mood Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; background:#fafafa; }
+  </style>
+</head>
+
+<body>
+<div id="root"></div>
+
+<!-- React & Lucide via CDN -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+<script type="text/babel">
+/* global React, ReactDOM, lucide */
+const { useState } = React;
+const { Plus, Calendar, TrendingUp, Settings, Heart } = lucide;
+
+// ---------- component ----------
+function App() {
+  const [tab, setTab] = useState('track');
+  const [data, setData] = useState({
+    lastPeriodStart: null,
+    cycleLength: 28,
+    periodLength: 5,
+    entries: {}
+  });
+
+  const moods = [
+    {id:'happy',  name:'Happy',  emoji:'😊', color:'bg-yellow-100'},
+    {id:'sad',    name:'Sad',    emoji:'😢', color:'bg-blue-100'},
+    {id:'angry',  name:'Angry',  emoji:'😤', color:'bg-red-100'},
+    {id:'anxious',name:'Anxious',emoji:'😰', color:'bg-purple-100'},
+    {id:'energetic',name:'Energetic',emoji:'⚡', color:'bg-orange-100'},
+    {id:'tired',  name:'Tired',  emoji:'😴', color:'bg-gray-100'},
+    {id:'emotional',name:'Emotional',emoji:'🥺', color:'bg-pink-100'},
+    {id:'calm',   name:'Calm',   emoji:'😌', color:'bg-green-100'},
+  ];
+
+  const symptoms = ['Cramps','Bloating','Headache','Acne','Cravings','Nausea','Fatigue','Mood swings'];
+
+  const today = new Date().toISOString().split('T')[0];
+  const entry = data.entries[today] || {moods:[], symptoms:[], notes:''};
+
+  // simple toggle helpers
+  const toggle = (arr, val) => arr.includes(val) ? arr.filter(v=>v!==val) : [...arr, val];
+  const update = (field, val) => setData(d=>({...d, entries:{...d.entries, [today]:{...entry,[field]:val}}}));
+
+  // Track tab
+  const TrackTab = () => (
+    <div className="p-4 space-y-4">
+      <div className="bg-white p-4 rounded-xl shadow">
+        <h2 className="text-lg font-semibold mb-3">How are you feeling?</h2>
+        <div className="grid grid-cols-2 gap-2">
+          {moods.map(m=>(
+            <button key={m.id} onClick={()=>update('moods', toggle(entry.moods, m.id))}
+              className={`p-3 rounded-lg text-center ${entry.moods.includes(m.id)?m.color:'bg-gray-100'}`}>
+              <div className="text-2xl">{m.emoji}</div>
+              <div className="text-sm">{m.name}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="bg-white p-4 rounded-xl shadow">
+        <h2 className="text-lg font-semibold mb-3">Symptoms</h2>
+        <div className="flex flex-wrap gap-2">
+          {symptoms.map(s=>(
+            <button key={s} onClick={()=>update('symptoms', toggle(entry.symptoms, s))}
+              className={`px-3 py-1 rounded-full text-sm ${entry.symptoms.includes(s)?'bg-rose-500 text-white':'bg-gray-200'}`}>
+              {s}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="bg-white p-4 rounded-xl shadow">
+        <h2 className="text-lg font-semibold mb-2">Notes</h2>
+        <textarea rows="3" className="w-full p-2 border rounded" placeholder="Anything else?"
+          value={entry.notes} onChange={e=>update('notes', e.target.value)}></textarea>
+      </div>
+    </div>
+  );
+
+  // bottom nav
+  const tabs = [
+    {id:'track', name:'Track', icon:Plus},
+    {id:'calendar', name:'Calendar', icon:Calendar},
+    {id:'insights', name:'Insights', icon:TrendingUp},
+    {id:'settings', name:'Settings', icon:Settings},
+  ];
+
+  return (
+    <div className="max-w-sm mx-auto min-h-screen bg-gray-50">
+      <header className="bg-gradient-to-r from-rose-400 to-pink-500 text-white p-4 flex items-center space-x-2">
+        <Heart size={28} /><span className="text-xl font-bold">Cycle Tracker</span>
+      </header>
+
+      <main className="pb-20">
+        {tab === 'track' && <TrackTab />}
+        {/* other tabs can be added later */}
+      </main>
+
+      <footer className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-sm bg-white border-t">
+        <nav className="flex">
+          {tabs.map(t=>(
+            <button key={t.id} onClick={()=>setTab(t.id)}
+              className={`flex-1 p-3 flex flex-col items-center text-xs ${tab===t.id?'text-rose-500':'text-gray-500'}`}>
+              <t.icon size={20}/>
+              {t.name}
+            </button>
+          ))}
+        </nav>
+      </footer>
+    </div>
+  );
+}
+
+// mount
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+
+<!-- Babel for in-browser JSX -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</body>
 </html>
