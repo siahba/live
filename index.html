@@ -1118,6 +1118,12 @@ Recommendation:`;
                             body: JSON.stringify(payload)
                         });
 
+                        // Check if the response was successful
+                        if (!response.ok) {
+                            const errorText = await response.text();
+                            throw new Error(`HTTP error! status: ${response.status}, body: ${errorText}`);
+                        }
+
                         const result = await response.json();
 
                         if (result.candidates && result.candidates.length > 0 &&
@@ -1130,7 +1136,7 @@ Recommendation:`;
                         }
                     } catch (error) {
                         console.error("Error calling Gemini API for service recommendation:", error);
-                        serviceRecommendationOutput.value = "An error occurred while getting a recommendation. Please try again later.";
+                        serviceRecommendationOutput.value = `An error occurred: ${error.message}. Please try again later.`;
                     } finally {
                         // Hide loading spinner and enable button
                         serviceLoadingSpinner.classList.add('hidden');
