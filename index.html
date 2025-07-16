@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SWS Mechanical - When Failure Isn't an Option</title>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -11,7 +12,10 @@
       darkMode: 'class'
     }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
   <style>
     body {
       font-family: 'Commissioner', sans-serif;
@@ -19,94 +23,53 @@
       scroll-behavior: smooth;
     }
 
-    /* Hero parallax background */
+    /* Branding colors */
+    .text-sws-blue { color: #1a4d7d; }
+    .bg-sws-blue { background-color: #1a4d7d; }
+    .border-sws-blue { border-color: #1a4d7d; }
+    .text-sws-gray { color: #4a4a4a; }
+    .bg-sws-gray { background-color: #4a4a4a; }
+    .text-sws-orange { color: #f26522; }
+    .bg-sws-orange { background-color: #f26522; }
+
+    /* Hero background */
     .hero-bg {
       background-image: url('https://img.freepik.com/premium-photo/team-construction-workers-installing-plumbing-pipes-working-together-ensure-proper-water-flow-drainage_1214173-32857.jpg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
-      position: relative;
       animation: heroZoomPan 30s infinite alternate ease-in-out;
     }
+
     .hero-bg::before {
       content: "";
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       background: linear-gradient(to right, rgba(26, 77, 125, 0.9), rgba(26, 77, 125, 0.5));
     }
+
     @keyframes heroZoomPan {
       0% { background-size: 100%; background-position: center center; }
       100% { background-size: 110%; background-position: center right; }
     }
 
-    /* Semi-transparent section backgrounds with blur */
-    #who-we-serve-section,
-    #featured-projects-section,
-    #certifications-affiliations-section,
-    #process-overview-section,
-    #about-us,
-    #boiler-installation-section,
-    #specialty-equipment-piping-section,
-    #chilled-water-systems-section,
-    #steam-piping-systems-section,
-    #contact-us,
-    #why-sws-mechanical-section,
-    #our-services,
-    #specialty-pumps-section,
-    #hydronic-systems-section,
-    #snow-melt-systems-section,
-    #industries-we-serve,
-    #careers-with-us {
+    /* Transparency and dark mode styling */
+    section {
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
     }
 
-    #who-we-serve-section,
-    #featured-projects-section,
-    #certifications-affiliations-section,
-    #process-overview-section,
-    #about-us,
-    #boiler-installation-section,
-    #specialty-equipment-piping-section,
-    #chilled-water-systems-section,
-    #steam-piping-systems-section,
-    #contact-us {
-      background-color: rgba(255, 255, 255, 0.6);
+    .dark section {
+      background-color: rgba(255,255,255,0.05);
     }
 
-    #why-sws-mechanical-section,
-    #our-services,
-    #specialty-pumps-section,
-    #hydronic-systems-section,
-    #snow-melt-systems-section,
-    #industries-we-serve,
-    #careers-with-us {
-      background-color: rgba(74, 74, 74, 0.6);
+    .light-section {
+      background-color: rgba(255,255,255,0.6);
     }
 
-    /* Dark mode overrides */
-    .dark #who-we-serve-section,
-    .dark #featured-projects-section,
-    .dark #certifications-affiliations-section,
-    .dark #process-overview-section,
-    .dark #about-us,
-    .dark #boiler-installation-section,
-    .dark #specialty-equipment-piping-section,
-    .dark #chilled-water-systems-section,
-    .dark #steam-piping-systems-section,
-    .dark #contact-us {
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-
-    .dark #why-sws-mechanical-section,
-    .dark #our-services,
-    .dark #specialty-pumps-section,
-    .dark #hydronic-systems-section,
-    .dark #snow-melt-systems-section,
-    .dark #industries-we-serve,
-    .dark #careers-with-us {
-      background-color: rgba(0, 0, 0, 0.6);
+    .dark-section {
+      background-color: rgba(74,74,74,0.6);
     }
   </style>
 </head>
@@ -134,7 +97,7 @@
         <li class="mt-4 md:mt-0 md:ml-8">
           <a href="#contact-us" class="bg-sws-orange text-white py-2 px-6 rounded-lg shadow-md hover:bg-orange-600 transition duration-300 font-semibold">Request a Bid</a>
         </li>
-        <!-- Dark mode toggle -->
+        <!-- Dark Mode Toggle -->
         <li class="mt-4 md:mt-0 md:ml-4">
           <button onclick="document.body.classList.toggle('dark')" class="bg-sws-orange text-white px-4 py-2 rounded hover:bg-orange-600 transition duration-300">
             Toggle Dark Mode
@@ -143,6 +106,181 @@
       </ul>
     </nav>
   </header>
+<!-- Hero Section -->
+<section id="hero-section" class="hero-bg py-20 md:py-32 lg:py-48 text-white relative flex items-center justify-center text-center">
+  <div class="relative z-10 max-w-4xl px-6">
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+      When Failure Isn’t an Option, Utah Builders Call SWS Mechanical
+    </h1>
+    <p class="text-xl md:text-2xl mb-10">
+      Commercial and multifamily plumbing, engineered and delivered by the team trusted for the region’s most demanding projects.
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+      <a href="#contact-us" class="bg-sws-orange text-white py-3 px-8 rounded-lg shadow-xl hover:bg-orange-600 transition duration-300 text-lg font-semibold">Request a Bid</a>
+      <a href="#our-projects" class="bg-white text-sws-blue py-3 px-8 rounded-lg shadow-xl hover:bg-gray-100 transition duration-300 text-lg font-semibold border-2 border-transparent hover:border-sws-blue">See Our Projects</a>
+    </div>
+  </div>
+</section>
+
+<!-- Who We Serve -->
+<section id="who-we-serve-section" class="py-16 md:py-24 px-6 light-section">
+  <div class="container mx-auto max-w-6xl">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Who We Serve</h2>
+    <p class="text-lg md:text-xl text-center max-w-3xl mx-auto mb-16">
+      From ground-up construction to emergency retrofits, SWS Mechanical partners with general contractors, developers, and builders who demand technical depth, reliability, and zero excuses.
+    </p>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
+      <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 bg-white bg-opacity-80 dark:bg-white/10">
+        <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4">
+          <span class="text-white text-3xl">🏠</span>
+        </div>
+        <span class="text-lg font-semibold text-sws-gray dark:text-white">Multifamily</span>
+      </div>
+      <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 bg-white bg-opacity-80 dark:bg-white/10">
+        <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4">
+          <span class="text-white text-3xl">🏨</span>
+        </div>
+        <span class="text-lg font-semibold text-sws-gray dark:text-white">Hotels</span>
+      </div>
+      <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 bg-white bg-opacity-80 dark:bg-white/10">
+        <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4">
+          <span class="text-white text-3xl">🍽️</span>
+        </div>
+        <span class="text-lg font-semibold text-sws-gray dark:text-white">Restaurants</span>
+      </div>
+      <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 bg-white bg-opacity-80 dark:bg-white/10">
+        <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4">
+          <span class="text-white text-3xl">⚕️</span>
+        </div>
+        <span class="text-lg font-semibold text-sws-gray dark:text-white">Healthcare</span>
+      </div>
+      <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 bg-white bg-opacity-80 dark:bg-white/10">
+        <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4">
+          <span class="text-white text-3xl">🏗️</span>
+        </div>
+        <span class="text-lg font-semibold text-sws-gray dark:text-white">New Builds</span>
+      </div>
+      <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 bg-white bg-opacity-80 dark:bg-white/10">
+        <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4">
+          <span class="text-white text-3xl">🛠️</span>
+        </div>
+        <span class="text-lg font-semibold text-sws-gray dark:text-white">Renovation</span>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Why SWS Mechanical -->
+<section id="why-sws-mechanical-section" class="py-20 px-6 dark-section">
+  <div class="container mx-auto max-w-5xl">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12">Why SWS Mechanical?</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div>
+        <h3 class="text-xl font-semibold text-white mb-3">Precision Engineering</h3>
+        <p class="text-white/80 mb-6">
+          Every system we install is designed and executed with technical accuracy and foresight, reducing risk and maximizing efficiency.
+        </p>
+
+        <h3 class="text-xl font-semibold text-white mb-3">Proactive Project Management</h3>
+        <p class="text-white/80 mb-6">
+          We coordinate with trades, adapt quickly, and keep your schedule moving — because the job depends on it.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-white mb-3">Licensed & Insured</h3>
+        <p class="text-white/80 mb-6">
+          Our credentials cover all required commercial plumbing work in Utah, giving you peace of mind from permitting to inspection.
+        </p>
+
+        <h3 class="text-xl font-semibold text-white mb-3">Trusted by Utah’s Top Builders</h3>
+        <p class="text-white/80 mb-6">
+          General contractors across the Wasatch Front rely on SWS Mechanical when performance, professionalism, and reputation are on the line.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Projects -->
+<section id="featured-projects-section" class="py-20 px-6 light-section">
+  <div class="container mx-auto max-w-6xl">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12">Featured Projects</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white dark:bg-white/10 rounded-xl shadow-md overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1581092334700-52497f4ed235?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-48 object-cover" alt="Project 1">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-sws-blue dark:text-white mb-2">Skyline Lofts</h3>
+          <p class="text-sws-gray dark:text-white/80">Complete plumbing system for a 6-story downtown residential development.</p>
+        </div>
+      </div>
+      <div class="bg-white dark:bg-white/10 rounded-xl shadow-md overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1597000453895-70d7a7c3c7f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-48 object-cover" alt="Project 2">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-sws-blue dark:text-white mb-2">Sage Hotel</h3>
+          <p class="text-sws-gray dark:text-white/80">Design-build for boutique hotel plumbing with space constraints and luxury finishes.</p>
+        </div>
+      </div>
+      <div class="bg-white dark:bg-white/10 rounded-xl shadow-md overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1581261060741-090661f47031?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="w-full h-48 object-cover" alt="Project 3">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-sws-blue dark:text-white mb-2">Alta Medical</h3>
+          <p class="text-sws-gray dark:text-white/80">Critical timeline retrofit for outpatient clinic with high-spec piping systems.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- About Us -->
+<section id="about-us" class="py-20 px-6 light-section">
+  <div class="container mx-auto max-w-4xl text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-sws-blue mb-6">About SWS Mechanical</h2>
+    <p class="text-lg text-sws-gray dark:text-white/80">
+      Founded on integrity, precision, and grit — we are commercial plumbing experts committed to doing the job right the first time. Our team brings decades of experience across Utah’s most complex mechanical projects.
+    </p>
+  </div>
+</section>
+
+<!-- Our Services -->
+<section id="our-services" class="py-20 px-6 dark-section">
+  <div class="container mx-auto max-w-6xl text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-white mb-12">Our Services</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+      <div class="bg-white dark:bg-white/10 p-6 rounded-xl shadow-lg">
+        <h3 class="text-xl font-semibold text-sws-blue dark:text-white mb-3">New Construction</h3>
+        <p class="text-sws-gray dark:text-white/80">Comprehensive plumbing systems for new commercial and multifamily buildings — designed, installed, and delivered on time.</p>
+      </div>
+      <div class="bg-white dark:bg-white/10 p-6 rounded-xl shadow-lg">
+        <h3 class="text-xl font-semibold text-sws-blue dark:text-white mb-3">Retrofit & Remodel</h3>
+        <p class="text-sws-gray dark:text-white/80">We specialize in surgical piping retrofits, renovations, and fast-track tenant improvements.</p>
+      </div>
+      <div class="bg-white dark:bg-white/10 p-6 rounded-xl shadow-lg">
+        <h3 class="text-xl font-semibold text-sws-blue dark:text-white mb-3">Design-Build Support</h3>
+        <p class="text-sws-gray dark:text-white/80">Collaborative approach to mechanical planning that reduces clashes, delays, and costly change orders.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Us -->
+<section id="contact-us" class="py-20 px-6 light-section">
+  <div class="container mx-auto max-w-4xl text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-sws-blue mb-6">Get In Touch</h2>
+    <p class="text-lg text-sws-gray dark:text-white/80 mb-8">
+      Ready to discuss your project or need a bid? Let’s talk.
+    </p>
+    <form class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+      <input type="text" placeholder="Full Name" class="p-4 rounded-lg bg-white dark:bg-white/10 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-sws-orange col-span-2" />
+      <input type="email" placeholder="Email Address" class="p-4 rounded-lg bg-white dark:bg-white/10 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-sws-orange" />
+      <input type="text" placeholder="Phone Number" class="p-4 rounded-lg bg-white dark:bg-white/10 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-sws-orange" />
+      <textarea placeholder="Your Message" rows="5" class="p-4 rounded-lg bg-white dark:bg-white/10 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-sws-orange col-span-2"></textarea>
+      <button type="submit" class="bg-sws-orange text-white py-3 px-6 rounded-lg shadow-md hover:bg-orange-600 transition duration-300 col-span-2">
+        Send Message
+      </button>
+    </form>
+  </div>
+</section>
 
   <!-- Your remaining page content goes here (hero section, services, etc.) -->
   <!-- No other changes are needed; all your sections are now set up to support transparency and dark mode. -->
