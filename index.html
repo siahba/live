@@ -135,7 +135,7 @@
         #our-projects,
         #safety-commitment,
         #contact-us {
-            background: linear-gradient(rgba(248, 248, 248, 0.9), rgba(248, 248, 248, 0.9)), url('https://img.freepik.com/free-photo/blue-texture_1160-639.jpg');
+            background: linear-gradient(rgba(248, 248, 248, 0.9), rgba(248, 248, 248, 0.9)), url('https://img.freepik.com/free-photo/abstract-metallic-background-with-blue-grunge-effect_1048-6459.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -143,7 +143,7 @@
 
         /* For BLUE sections with the metallic background */
         #industries-we-serve {
-            background: linear-gradient(rgba(26, 77, 125, 0.9), rgba(26, 77, 125, 0.9)), url('https://img.freepik.com/free-photo/blue-texture_1160-639.jpg');
+            background: linear-gradient(rgba(26, 77, 125, 0.9), rgba(26, 77, 125, 0.9)), url('https://img.freepik.com/free-photo/abstract-metallic-background-with-blue-grunge-effect_1048-6459.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -188,44 +188,66 @@
 <body class="text-sws-gray">
 
     <!-- Header – Sticky -->
-    <header class="sticky top-0 z-50 bg-white shadow-md py-4 px-6 md:px-12">
-        <nav class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+    <header class="sticky top-0 z-50 bg-white/95 shadow-md">
+        <nav class="container mx-auto flex items-center justify-between py-4 px-6 md:px-12 relative">
             <!-- Logo -->
-            <div class="mb-4 md:mb-0">
+            <div class="hidden md:block">
                 <a href="#hero-section" class="text-2xl font-bold text-sws-blue">
                     <img src="https://lirp.cdn-website.com/80c3db1d806a43ed92f207627f52abdc/dms3rep/multi/opt/g48-1920w.png" alt="SWS Mechanical Logo" class="h-12">
                 </a>
             </div>
+             <!-- Mobile Logo / Title -->
+            <div class="md:hidden">
+                <a href="#hero-section" class="text-xl font-bold text-sws-blue">SWS Mechanical</a>
+            </div>
 
-            <!-- Navigation Links -->
-            <ul class="flex flex-wrap justify-center md:flex-row md:space-x-8 text-lg font-medium text-sws-gray">
-                <li><a href="#about-us" class="hover:text-sws-orange transition duration-300">About</a></li>
-                <!-- Services Dropdown -->
-                <li class="relative group">
-                    <a href="#our-services" class="hover:text-sws-orange transition duration-300 flex items-center">
-                        Services
-                        <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </a>
-                    <ul class="absolute hidden group-hover:block bg-white shadow-lg rounded-md py-2 w-48 z-10">
-                        <li><a href="#boiler-installation-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Boiler Installation</a></li>
-                        <li><a href="#specialty-pumps-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Specialty Pumps</a></li>
-                        <li><a href="#specialty-equipment-piping-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Specialty Equipment Piping</a></li>
-                        <li><a href="#hydronic-systems-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Hydronic Systems</a></li>
-                        <li><a href="#chilled-water-systems-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Chilled Water Systems</a></li>
-                        <li><a href="#snow-melt-systems-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Snow Melt Systems</a></li>
-                        <li><a href="#steam-piping-systems-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Steam Piping Systems</a></li>
-                    </ul>
-                </li>
-                <li><a href="#our-projects" class="hover:text-sws-orange transition duration-300">Projects</a></li>
-                <li><a href="#industries-we-serve" class="hover:text-sws-orange transition duration-300">Industries</a></li>
-                <li><a href="#safety-commitment" class="hover:text-sws-orange transition duration-300">Safety</a></li>
-                <li><a href="#careers-with-us" class="hover:text-sws-orange transition duration-300">Careers</a></li>
-                <li><a href="#contact-us" class="hover:text-sws-orange transition duration-300">Contact</a></li>
-                <!-- Request a Bid Button -->
-                <li class="mt-4 md:mt-0 md:ml-8">
-                    <a href="#contact-us" class="bg-sws-orange text-white py-2 px-6 rounded-lg shadow-md hover:bg-orange-600 transition duration-300 font-semibold">Request a Bid</a>
-                </li>
-            </ul>
+            <!-- Desktop Navigation Links -->
+            <div class="hidden md:flex items-center">
+                <ul class="flex flex-wrap justify-center md:flex-row md:space-x-8 text-lg font-medium text-sws-gray">
+                    <li><a href="#about-us" class="hover:text-sws-orange transition duration-300">About</a></li>
+                    <!-- Services Dropdown -->
+                    <li class="relative group">
+                        <a href="#our-services" class="hover:text-sws-orange transition duration-300 flex items-center">
+                            Services
+                            <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </a>
+                        <ul class="absolute hidden group-hover:block bg-white shadow-lg rounded-md py-2 w-48 z-10">
+                            <li><a href="#boiler-installation-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Boiler Installation</a></li>
+                            <li><a href="#specialty-pumps-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Specialty Pumps</a></li>
+                            <li><a href="#specialty-equipment-piping-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Specialty Equipment Piping</a></li>
+                            <li><a href="#hydronic-systems-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Hydronic Systems</a></li>
+                            <li><a href="#chilled-water-systems-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Chilled Water Systems</a></li>
+                            <li><a href="#snow-melt-systems-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Snow Melt Systems</a></li>
+                            <li><a href="#steam-piping-systems-section" class="block px-4 py-2 text-sws-gray hover:bg-gray-100">Steam Piping Systems</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#our-projects" class="hover:text-sws-orange transition duration-300">Projects</a></li>
+                    <li><a href="#industries-we-serve" class="hover:text-sws-orange transition duration-300">Industries</a></li>
+                    <li><a href="#safety-commitment" class="hover:text-sws-orange transition duration-300">Safety</a></li>
+                    <li><a href="#careers-with-us" class="hover:text-sws-orange transition duration-300">Careers</a></li>
+                    <li><a href="#contact-us" class="hover:text-sws-orange transition duration-300">Contact</a></li>
+                </ul>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-sws-blue focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white shadow-lg">
+                <ul class="flex flex-col items-center py-4">
+                    <li><a href="#about-us" class="mobile-link block py-2 px-4 text-sws-gray hover:bg-gray-100 w-full text-center">About</a></li>
+                    <li><a href="#our-services" class="mobile-link block py-2 px-4 text-sws-gray hover:bg-gray-100 w-full text-center">Services</a></li>
+                    <li><a href="#our-projects" class="mobile-link block py-2 px-4 text-sws-gray hover:bg-gray-100 w-full text-center">Projects</a></li>
+                    <li><a href="#industries-we-serve" class="mobile-link block py-2 px-4 text-sws-gray hover:bg-gray-100 w-full text-center">Industries</a></li>
+                    <li><a href="#safety-commitment" class="mobile-link block py-2 px-4 text-sws-gray hover:bg-gray-100 w-full text-center">Safety</a></li>
+                    <li><a href="#careers-with-us" class="mobile-link block py-2 px-4 text-sws-gray hover:bg-gray-100 w-full text-center">Careers</a></li>
+                    <li><a href="#contact-us" class="mobile-link block py-2 px-4 text-sws-gray hover:bg-gray-100 w-full text-center">Contact</a></li>
+                </ul>
+            </div>
         </nav>
     </header>
 
@@ -1183,24 +1205,33 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Scroll-triggered animations
             const animateElements = document.querySelectorAll('.animate-on-scroll');
-
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        // Optional: Unobserve after animation to save resources
-                        // observer.unobserve(entry.target);
-                    } else {
-                        // Optional: Remove class when out of view to re-trigger on scroll back
-                        // entry.target.classList.remove('is-visible');
                     }
                 });
             }, {
                 threshold: 0.2 // Trigger when 20% of the element is visible
             });
-
             animateElements.forEach(element => {
                 observer.observe(element);
+            });
+
+            // Mobile Menu Toggle
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu when a link is clicked
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
             });
         });
     </script>
