@@ -120,7 +120,9 @@
             transform: scale(1.15);
         }
 
-        /* Translucent backgrounds for sections */
+        /* Section Background Images with 90% Opacity Color Overlays */
+
+        /* For WHITE and LIGHT GRAY sections with the metallic background */
         #who-we-serve-section,
         #featured-projects-section,
         #certifications-affiliations-section,
@@ -130,19 +132,38 @@
         #specialty-equipment-piping-section,
         #chilled-water-systems-section,
         #steam-piping-systems-section,
+        #our-projects,
+        #safety-commitment,
         #contact-us {
-            background-color: rgba(255, 255, 255, 0.75); /* 80% opaque white */
+            background: linear-gradient(rgba(248, 248, 248, 0.9), rgba(248, 248, 248, 0.9)), url('https://img.freepik.com/free-photo/blue-texture_1160-639.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
+        /* For BLUE sections with the metallic background */
+        #industries-we-serve {
+            background: linear-gradient(rgba(26, 77, 125, 0.9), rgba(26, 77, 125, 0.9)), url('https://img.freepik.com/free-photo/blue-texture_1160-639.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* For GRAY sections with the cuboid background */
         #why-sws-mechanical-section,
         #our-services,
+        .testimonials-section,
         #specialty-pumps-section,
         #hydronic-systems-section,
         #snow-melt-systems-section,
-        #industries-we-serve,
-        #careers-with-us {
-            background-color: rgba(74, 74, 74, 0.75); /* 80% opaque steel gray */
+        #careers-with-us,
+        footer.bg-sws-gray {
+            background: linear-gradient(rgba(74, 74, 74, 0.9), rgba(74, 74, 74, 0.9)), url('https://img.freepik.com/free-photo/3d-geometric-abstract-cuboid-wallpaper-background_1048-8656.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
+
 
         /* Adjusting nested elements that might have their own backgrounds to be transparent or match */
         #our-services .bg-white.bg-opacity-10,
@@ -150,7 +171,8 @@
         #hydronic-systems-section .bg-white.bg-opacity-10,
         #snow-melt-systems-section .bg-white.bg-opacity-10,
         #industries-we-serve .bg-white.bg-opacity-10,
-        #careers-with-us .bg-white.bg-opacity-10 {
+        #careers-with-us .bg-white.bg-opacity-10,
+        .testimonials-section .bg-white.bg-opacity-10 {
             background-color: rgba(255, 255, 255, 0.15); /* Slightly more opaque white for cards on dark sections */
         }
         #about-us .bg-gray-50,
@@ -232,37 +254,37 @@
             </p>
 
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
-                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll bg-white/50">
                     <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4 icon-hover-scale">
                         <span class="text-white text-3xl">🏠</span> <!-- Icon Placeholder -->
                     </div>
                     <span class="text-lg font-semibold text-sws-gray">Multifamily</span>
                 </div>
-                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll bg-white/50">
                     <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4 icon-hover-scale">
                         <span class="text-white text-3xl">🏨</span> <!-- Icon Placeholder -->
                     </div>
                     <span class="text-lg font-semibold text-sws-gray">Hotels</span>
                 </div>
-                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll bg-white/50">
                     <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4 icon-hover-scale">
                         <span class="text-white text-3xl">🍽️</span> <!-- Icon Placeholder -->
                     </div>
                     <span class="text-lg font-semibold text-sws-gray">Restaurants</span>
                 </div>
-                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll bg-white/50">
                     <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4 icon-hover-scale">
                         <span class="text-white text-3xl">⚕️</span> <!-- Icon Placeholder -->
                     </div>
                     <span class="text-lg font-semibold text-sws-gray">Healthcare</span>
                 </div>
-                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll bg-white/50">
                     <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4 icon-hover-scale">
                         <span class="text-white text-3xl">🏗️</span> <!-- Icon Placeholder -->
                     </div>
                     <span class="text-lg font-semibold text-sws-gray">New Builds</span>
                 </div>
-                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="flex flex-col items-center p-4 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll bg-white/50">
                     <div class="w-16 h-16 bg-sws-blue rounded-full flex items-center justify-center mb-4 icon-hover-scale">
                         <span class="text-white text-3xl">🛠️</span> <!-- Icon Placeholder -->
                     </div>
@@ -326,7 +348,7 @@
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <!-- Project 1 -->
-                <div class="bg-gray-100 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="bg-gray-100/75 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/low-angle-shot-beautiful-historical-architectural-structure-paris-france_181624-22776.jpg" alt="The Monarch Apartments" class="w-full h-56 object-cover rounded-t-xl">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-sws-blue mb-3">The Monarch Apartments</h3>
@@ -335,7 +357,7 @@
                     </div>
                 </div>
                 <!-- Project 2 -->
-                <div class="bg-gray-100 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="bg-gray-100/75 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/view-geometric-buildings_1112-802.jpg" alt="Salt Lake City Medical Center" class="w-full h-56 object-cover rounded-t-xl">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-sws-blue mb-3">Salt Lake City Medical Center</h3>
@@ -344,7 +366,7 @@
                     </div>
                 </div>
                 <!-- Project 3 -->
-                <div class="bg-gray-100 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="bg-gray-100/75 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/aerial-shot-aria-hotel-las-vegas_181624-42881.jpg" alt="Hilton Downtown" class="w-full h-56 object-cover rounded-t-xl">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-sws-blue mb-3">Hilton Downtown</h3>
@@ -360,11 +382,11 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="py-16 md:py-24 bg-sws-gray px-6">
+    <section class="py-16 md:py-24 bg-sws-gray px-6 testimonials-section">
         <div class="container mx-auto max-w-4xl text-white">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 animate-on-scroll">What Our Partners Say</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="bg-white bg-opacity-10 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <p class="text-lg md:text-xl italic mb-6">
                         “SWS Mechanical is the only contractor I trust when the schedule is tight and the stakes are high.”
                     </p>
@@ -372,7 +394,7 @@
                         — Project Executive, Big Mountain Construction
                     </p>
                 </div>
-                <div class="bg-white bg-opacity-10 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="bg-white bg-opacity-10 p-8 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <p class="text-lg md:text-xl italic mb-6">
                         “They solved problems on our multifamily build that left other contractors stumped. On time, on budget, no drama.”
                     </p>
@@ -393,10 +415,10 @@
             </p>
             <div class="flex flex-wrap justify-center items-center gap-8">
                 <!-- Placeholder Logos/Badges -->
-                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=UT+Contractor" alt="Licensed Utah Contractor" class="h-16 rounded-lg shadow-md hover-lift-shadow animate-on-scroll">
-                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=OSHA" alt="OSHA" class="h-16 rounded-lg shadow-md hover-lift-shadow animate-on-scroll">
-                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=ABC" alt="ABC" class="h-16 rounded-lg shadow-md hover-lift-shadow animate-on-scroll">
-                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=PHCC" alt="PHCC" class="h-16 rounded-lg shadow-md hover-lift-shadow animate-on-scroll">
+                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=UT+Contractor" alt="Licensed Utah Contractor" class="h-16 rounded-lg shadow-md hover-lift-shadow animate-on-scroll bg-white/50 p-2">
+                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=OSHA" alt="OSHA" class="h-16 rounded-lg shadow-md hover-lift-shadow animate-on-scroll bg-white/50 p-2">
+                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=ABC" alt="ABC" class="h-16 rounded-lg shadow-md hover-lift-shadow animate-on-scroll bg-white/50 p-2">
+                <img src="https://placehold.co/120x60/f0f0f0/1a4d7d?text=PHCC" alt="PHCC" class="h-16 rounded-lg shadow-md hover-lift-shadow animate-on-scroll bg-white/50 p-2">
             </div>
         </div>
     </section>
@@ -406,35 +428,35 @@
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">How We Work</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="flex items-start bg-white/75 p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4 icon-hover-scale">1</div>
                     <div>
                         <h3 class="text-xl font-semibold text-sws-blue mb-2">Pre-construction planning & BIM modeling</h3>
                         <p class="text-sws-gray">Detailed upfront planning using Building Information Modeling to ensure precision and efficiency.</p>
                     </div>
                 </div>
-                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="flex items-start bg-white/75 p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4 icon-hover-scale">2</div>
                     <div>
                         <h3 class="text-xl font-semibold text-sws-blue mb-2">Transparent, detailed bidding</h3>
                         <p class="text-sws-gray">Clear and comprehensive bids with no hidden costs, giving you full financial clarity.</p>
                     </div>
                 </div>
-                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="flex items-start bg-white/75 p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4 icon-hover-scale">3</div>
                     <div>
                         <h3 class="text-xl font-semibold text-sws-blue mb-2">Dedicated project management</h3>
                         <p class="text-sws-gray">A single point of contact ensures seamless communication and project execution.</p>
                     </div>
                 </div>
-                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="flex items-start bg-white/75 p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4 icon-hover-scale">4</div>
                     <div>
                         <h3 class="text-xl font-semibold text-sws-blue mb-2">On-time, on-budget delivery</h3>
                         <p class="text-sws-gray">Commitment to delivering projects within agreed timelines and financial parameters.</p>
                     </div>
                 </div>
-                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="flex items-start bg-white/75 p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4 icon-hover-scale">5</div>
                     <div>
                         <h3 class="text-xl font-semibold text-sws-blue mb-2">Ongoing service & support</h3>
@@ -442,7 +464,7 @@
                     </div>
                 </div>
                 <!-- New 6th Step: Safety -->
-                <div class="flex items-start bg-white p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="flex items-start bg-white/75 p-6 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <div class="flex-shrink-0 w-12 h-12 bg-sws-orange text-white rounded-full flex items-center justify-center font-bold text-xl mr-4 icon-hover-scale">6</div>
                     <div>
                         <h3 class="text-xl font-semibold text-sws-blue mb-2">Rigorous Safety Protocols</h3>
@@ -454,7 +476,7 @@
     </section>
 
     <!-- About Us Section (from sws-about-page) -->
-    <section id="about-us" class="py-16 md:py-24 bg-white px-6">
+    <section id="about-us" class="py-16 md:py-24 px-6">
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">About SWS Mechanical</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -477,7 +499,7 @@
 
             <div class="mt-20">
                 <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Our Mission</h2>
-                <div class="max-w-4xl mx-auto text-center text-lg leading-relaxed text-sws-gray p-8 bg-gray-50 rounded-xl shadow-md animate-on-scroll">
+                <div class="max-w-4xl mx-auto text-center text-lg leading-relaxed text-sws-gray p-8 bg-gray-50/75 rounded-xl shadow-md animate-on-scroll">
                     <p>
                         To provide superior plumbing and mechanical solutions for commercial and multifamily projects, ensuring exceptional quality, timely delivery, and unwavering commitment to safety and client satisfaction. We aim to be the partner of choice for those who demand excellence.
                     </p>
@@ -555,7 +577,7 @@
 
     <!-- Individual Service Sections -->
     <!-- Boiler Installation Section -->
-    <section id="boiler-installation-section" class="py-16 md:py-24 bg-white px-6">
+    <section id="boiler-installation-section" class="py-16 md:py-24 px-6">
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Boiler Installation & Service</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -577,19 +599,19 @@
             <div class="mt-20">
                 <h3 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Our Boiler Services Include:</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">New Boiler System Installation</h4>
                         <p class="text-base text-sws-gray">Custom design and seamless installation of high-efficiency commercial boilers.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Boiler Repair & Troubleshooting</h4>
                         <p class="text-base text-sws-gray">Rapid and effective diagnostics and repair for all types of commercial boiler issues.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Preventative Maintenance Programs</h4>
                         <p class="text-base text-sws-gray">Scheduled inspections and servicing to optimize performance and extend equipment life.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Boiler Upgrades & Replacements</h4>
                         <p class="text-base text-sws-gray">Expert advice and execution for upgrading to more modern, efficient boiler technologies.</p>
                     </div>
@@ -643,7 +665,7 @@
     </section>
 
     <!-- Specialty Equipment Piping Section -->
-    <section id="specialty-equipment-piping-section" class="py-16 md:py-24 bg-white px-6">
+    <section id="specialty-equipment-piping-section" class="py-16 md:py-24 px-6">
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Specialty Equipment Piping</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -665,19 +687,19 @@
             <div class="mt-20">
                 <h3 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Our Specialty Piping Services Include:</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Custom System Design & Engineering</h4>
                         <p class="text-base text-sws-gray">Tailored piping designs to integrate seamlessly with your unique equipment and processes.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Precision Installation & Fabrication</h4>
                         <p class="text-base text-sws-gray">Expert installation with meticulous attention to detail, including custom fabrication when required.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Regulatory Compliance & Safety</h4>
                         <p class="text-base text-sws-gray">Ensuring all piping systems meet industry standards and local safety regulations.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Ongoing Maintenance & Support</h4>
                         <p class="text-base text-sws-gray">Scheduled maintenance and responsive support to maximize system lifespan and performance.</p>
                     </div>
@@ -731,7 +753,7 @@
     </section>
 
     <!-- Chilled Water Systems Section -->
-    <section id="chilled-water-systems-section" class="py-16 md:py-24 bg-white px-6">
+    <section id="chilled-water-systems-section" class="py-16 md:py-24 px-6">
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Chilled Water Systems</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -753,21 +775,21 @@
             <div class="mt-20">
                 <h3 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Our Chilled Water System Services Include:</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Custom Chiller System Design</h4>
                         <p class="text-base text-sws-gray">Tailored cooling solutions optimized for your facility's unique demands and energy goals.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Professional Chiller Installation</h4>
                         <p class="text-base text-sws-gray">Expert installation of all types of chillers, ensuring seamless integration and peak performance.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Energy Efficiency Optimization</h4>
-                        <p class="text-base">Strategies and technologies to maximize energy efficiency and reduce operational costs.</p>
+                        <p class="text-base text-sws-gray">Strategies and technologies to maximize energy efficiency and reduce operational costs.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md hover-lift-shadow animate-on-scroll">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Maintenance & Compliance</h4>
-                        <p class="text-base">Regular servicing to ensure system longevity and adherence to all safety and environmental regulations.</p>
+                        <p class="text-base text-sws-gray">Regular servicing to ensure system longevity and adherence to all safety and environmental regulations.</p>
                     </div>
                 </div>
             </div>
@@ -819,7 +841,7 @@
     </section>
 
     <!-- Steam Piping Systems Section -->
-    <section id="steam-piping-systems-section" class="py-16 md:py-24 bg-white px-6">
+    <section id="steam-piping-systems-section" class="py-16 md:py-24 px-6">
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Steam Piping Systems</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -841,19 +863,19 @@
             <div class="mt-20">
                 <h3 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Our Steam Piping Services Include:</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Custom Steam System Design</h4>
                         <p class="text-base text-sws-gray">Tailored design for new installations and upgrades, focusing on efficiency and safety.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Precision Installation & Fabrication</h4>
                         <p class="text-base text-sws-gray">Expert installation of high-pressure steam lines, including custom fabrication.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Regular Maintenance & Repair</h4>
                         <p class="text-base text-sws-gray">Proactive servicing and rapid response repairs to ensure system integrity and performance.</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl shadow-md">
+                    <div class="bg-gray-50/75 p-6 rounded-xl shadow-md">
                         <h4 class="text-2xl font-semibold text-sws-blue mb-3">Safety & Regulatory Compliance</h4>
                         <p class="text-base text-sws-gray">Ensuring all steam systems meet stringent safety standards and local regulations.</p>
                     </div>
@@ -863,7 +885,7 @@
     </section>
 
     <!-- Projects Section (from sws-projects-page) -->
-    <section id="our-projects" class="py-16 md:py-24 bg-white px-6">
+    <section id="our-projects" class="py-16 md:py-24 px-6">
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Our Completed Projects</h2>
             <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10 animate-on-scroll">
@@ -871,7 +893,7 @@
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <!-- Project 1 -->
-                <div class="bg-gray-100 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="bg-gray-100/75 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/low-angle-shot-beautiful-historical-architectural-structure-paris-france_181624-22776.jpg" alt="The Monarch Apartments" class="w-full h-56 object-cover rounded-t-xl">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-sws-blue mb-3">The Monarch Apartments</h3>
@@ -880,7 +902,7 @@
                     </div>
                 </div>
                 <!-- Project 2 -->
-                <div class="bg-gray-100 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="bg-gray-100/75 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/view-geometric-buildings_1112-802.jpg" alt="Salt Lake City Medical Center" class="w-full h-56 object-cover rounded-t-xl">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-sws-blue mb-3">Salt Lake City Medical Center</h3>
@@ -889,7 +911,7 @@
                     </div>
                 </div>
                 <!-- Project 3 -->
-                <div class="bg-gray-100 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
+                <div class="bg-gray-100/75 rounded-xl shadow-lg hover-lift-shadow animate-on-scroll">
                     <img src="https://img.freepik.com/free-photo/aerial-shot-aria-hotel-las-vegas_181624-42881.jpg" alt="Hilton Downtown" class="w-full h-56 object-cover rounded-t-xl">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold text-sws-blue mb-3">Hilton Downtown</h3>
@@ -971,7 +993,7 @@
     </section>
 
     <!-- Safety Section (from sws-safety-page) -->
-    <section id="safety-commitment" class="py-16 md:py-24 bg-white px-6">
+    <section id="safety-commitment" class="py-16 md:py-24 px-6">
         <div class="container mx-auto max-w-6xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Safety First, Always.</h2>
             <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10 animate-on-scroll">
@@ -1056,7 +1078,7 @@
     </section>
 
     <!-- Contact Us Section (from sws-contact-page) -->
-    <section id="contact-us" class="py-16 md:py-24 bg-gray-50 px-6">
+    <section id="contact-us" class="py-16 md:py-24 px-6">
         <div class="container mx-auto max-w-4xl">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-sws-blue mb-12 animate-on-scroll">Get in Touch</h2>
             <p class="text-xl md:text-2xl text-center max-w-3xl mx-auto mb-10 animate-on-scroll">
