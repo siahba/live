@@ -29,22 +29,26 @@ export default function JobDailiesTracker() {
   })
 
   useEffect(() => {
-    const savedEntries = localStorage.getItem("jobDailiesEntries")
-    if (savedEntries) {
-      try {
-        const parsedEntries = JSON.parse(savedEntries)
-        // Sort by date
-        parsedEntries.sort((a: JobEntry, b: JobEntry) => new Date(a.date).getTime() - new Date(b.date).getTime())
-        setEntries(parsedEntries)
-      } catch (error) {
-        console.error("Error parsing saved entries:", error)
+    if (typeof window !== "undefined") {
+      const savedEntries = localStorage.getItem("jobDailiesEntries")
+      if (savedEntries) {
+        try {
+          const parsedEntries = JSON.parse(savedEntries)
+          // Sort by date
+          parsedEntries.sort((a: JobEntry, b: JobEntry) => new Date(a.date).getTime() - new Date(b.date).getTime())
+          setEntries(parsedEntries)
+        } catch (error) {
+          console.error("Error parsing saved entries:", error)
+        }
       }
     }
     setLoading(false)
   }, [])
 
   const saveToLocalStorage = (newEntries: JobEntry[]) => {
-    localStorage.setItem("jobDailiesEntries", JSON.stringify(newEntries))
+    if (typeof window !== "undefined") {
+      localStorage.setItem("jobDailiesEntries", JSON.stringify(newEntries))
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
