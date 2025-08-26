@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "tailwindcss";
-
 @theme inline {
   /* Updated font family variables to use system fonts Arial/Helvetica */
   --font-sans: Arial, Helvetica, sans-serif;
