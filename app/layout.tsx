@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Job Dailies Tracker",
+  title: "Daily Tracker",
   description: "Track your daily job activities and export data",
   generator: "v0.app",
 }
