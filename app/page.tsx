@@ -58,10 +58,10 @@ export default function JobDailiesTracker() {
     const newEntry = {
       date: formData.date,
       task: formData.task,
-      hours: Number.parseFloat(formData.hours),
-      unitsCompleted: Number.parseFloat(formData.units),
+      hours: formData.hours ? Number.parseFloat(formData.hours) : 0,
+      unitsCompleted: formData.units ? Number.parseFloat(formData.units) : 0,
       notes: formData.notes,
-      changeOrders: Number.parseFloat(formData.changeOrders),
+      changeOrders: formData.changeOrders ? Number.parseFloat(formData.changeOrders) : 0,
     }
 
     try {
@@ -306,10 +306,16 @@ export default function JobDailiesTracker() {
                   <tr key={entry.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{entry.date}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{entry.task}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{entry.hours}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{entry.unitsCompleted}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {isNaN(entry.hours) ? 0 : entry.hours}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {isNaN(entry.unitsCompleted) ? 0 : entry.unitsCompleted}
+                    </td>
                     <td className="px-6 py-4 text-sm text-gray-900">{entry.notes}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{entry.changeOrders}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {isNaN(entry.changeOrders) ? 0 : entry.changeOrders}
+                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <button
                         onClick={() => handleEdit(entry.id)}

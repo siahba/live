@@ -46,6 +46,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["Arial", "Helvetica", "sans-serif"],
+        mono: ["Courier New", "Courier", "monospace"],
       },
     },
   },
