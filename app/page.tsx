@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 interface JobEntry {
   id: string
   date: string
+  tower: string
   task: string
   hours: number
   unitsCompleted: number
@@ -14,6 +15,7 @@ interface JobEntry {
 }
 
 const TASKS = ["Subrough", "Water", "Drainage", "Fire & Nail", "Tubs", "Gas", "Heaters", "Water Main", "Finishs"]
+const TOWERS = ["T1", "T2", "T3", "T4", "T5"]
 
 export default function JobDailiesTracker() {
   const [entries, setEntries] = useState<JobEntry[]>([])
@@ -21,6 +23,7 @@ export default function JobDailiesTracker() {
   const [editingId, setEditingId] = useState<string>("")
   const [formData, setFormData] = useState({
     date: "",
+    tower: "",
     task: "",
     hours: "",
     units: "",
@@ -30,11 +33,10 @@ export default function JobDailiesTracker() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const savedEntries = localStorage.getItem("jobDailiesEntries")
+      const savedEntries = localStorage.getItem("jobDaily'sEntries")
       if (savedEntries) {
         try {
           const parsedEntries = JSON.parse(savedEntries)
-          // Sort by date
           parsedEntries.sort((a: JobEntry, b: JobEntry) => new Date(a.date).getTime() - new Date(b.date).getTime())
           setEntries(parsedEntries)
         } catch (error) {
@@ -47,7 +49,7 @@ export default function JobDailiesTracker() {
 
   const saveToLocalStorage = (newEntries: JobEntry[]) => {
     if (typeof window !== "undefined") {
-      localStorage.setItem("jobDailiesEntries", JSON.stringify(newEntries))
+      localStorage.setItem("jobDaily'sEntries", JSON.stringify(newEntries))
     }
   }
 
@@ -57,6 +59,7 @@ export default function JobDailiesTracker() {
 
     const newEntry = {
       date: formData.date,
+      tower: formData.tower,
       task: formData.task,
       hours: formData.hours ? Number.parseFloat(formData.hours) : 0,
       unitsCompleted: formData.units ? Number.parseFloat(formData.units) : 0,
@@ -78,15 +81,14 @@ export default function JobDailiesTracker() {
         updatedEntries = [...entries, newEntryWithId]
       }
 
-      // Sort by date
       updatedEntries.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
       setEntries(updatedEntries)
       saveToLocalStorage(updatedEntries)
 
-      // Reset form
       setFormData({
         date: "",
+        tower: "",
         task: "",
         hours: "",
         units: "",
@@ -105,6 +107,7 @@ export default function JobDailiesTracker() {
     if (entry) {
       setFormData({
         date: entry.date,
+        tower: entry.tower || "",
         task: entry.task,
         hours: entry.hours.toString(),
         units: entry.unitsCompleted.toString(),
@@ -122,16 +125,17 @@ export default function JobDailiesTracker() {
   }
 
   const exportToCSV = () => {
-    const headers = ["Date", "Task", "Hours", "Units Completed", "Notes", "Change Orders"]
+    const headers = ["Date", "Tower", "Task", "Hours", "Units Completed", "Notes", "Change Orders"]
     const csvContent = [
       headers.join(","),
       ...entries.map((entry) =>
         [
           entry.date,
+          entry.tower || "",
           entry.task,
           entry.hours,
           entry.unitsCompleted,
-          `"${entry.notes.replace(/"/g, '""')}"`, // Escape quotes in notes
+          `"${entry.notes.replace(/"/g, '""')}"`,
           entry.changeOrders,
         ].join(","),
       ),
@@ -141,7 +145,7 @@ export default function JobDailiesTracker() {
     const url = window.URL.createObjectURL(blob)
     const a = document.createElement("a")
     a.href = url
-    a.download = `job-dailies-${new Date().toISOString().split("T")[0]}.csv`
+    a.download = `job-daily's-${new Date().toISOString().split("T")[0]}.csv`
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
@@ -152,7 +156,7 @@ export default function JobDailiesTracker() {
     <div className="bg-gray-100 min-h-screen font-sans">
       <div className="container mx-auto p-4 sm:p-6 lg:p-8">
         <div className="bg-white shadow-lg rounded-lg p-6 mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Dailies Tracker</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">Daily's Tracker</h1>
           <p className="text-gray-600 mb-4">Enter daily job details.</p>
 
           {loading && <div className="text-center text-gray-500 mb-4">Loading...</div>}
@@ -171,6 +175,26 @@ export default function JobDailiesTracker() {
                   onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2"
                 />
+              </div>
+
+              <div>
+                <label htmlFor="tower" className="block text-sm font-medium text-gray-700">
+                  Tower
+                </label>
+                <select
+                  id="tower"
+                  required
+                  value={formData.tower}
+                  onChange={(e) => setFormData({ ...formData, tower: e.target.value })}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm border p-2"
+                >
+                  <option value="">Select a Tower</option>
+                  {TOWERS.map((tower) => (
+                    <option key={tower} value={tower}>
+                      {tower}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div>
@@ -227,7 +251,7 @@ export default function JobDailiesTracker() {
 
               <div>
                 <label htmlFor="changeOrders" className="block text-sm font-medium text-gray-700">
-                  Change Orders (Hours)
+                  Change Orders
                 </label>
                 <input
                   type="number"
@@ -282,6 +306,9 @@ export default function JobDailiesTracker() {
                     Date
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Tower
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Task
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -305,6 +332,7 @@ export default function JobDailiesTracker() {
                 {entries.map((entry) => (
                   <tr key={entry.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{entry.date}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{entry.tower || ""}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{entry.task}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {isNaN(entry.hours) ? 0 : entry.hours}
