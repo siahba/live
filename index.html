@@ -95,7 +95,7 @@ body{margin:0;background:#2f3236}
 <script>
 var $ = function(id){return document.getElementById(id)};
 var q=$('q'), now=$('now'), hr=$('hr'), fc=$('fc'), pop=$('pop'), tp=$('tp'), bt=$('bt'), sl=$('sl'), ts=$('ts'), pb=$('pb');
-var ll=[40.76,-111.89], layers=[], times=[], cur=0, timer=null, W=null;
+var ll=[40.76,-111.89], layers=[], times=[], cur=0, timer=null, loading=false, W=null;
 
 /* ---------- map ---------- */
 var m=L.map('map').setView(ll,7);
@@ -145,25 +145,40 @@ function desc(c){
 }
 
 /* ---------- radar ---------- */
+function ensure(i){if(!m.hasLayer(layers[i]))layers[i].addTo(m)}
 function show(i){
+  ensure(i);
   layers.forEach(function(l,k){l.setOpacity(k==i?.7:0)});
   cur=i;sl.value=i;
   ts.textContent='Radar: '+new Date(times[i]*1000).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})+(i==layers.length-1?' (latest)':'');
 }
-function pause(){clearInterval(timer);timer=null;pb.textContent='Play'}
+// Only the visible frame is kept on the map. Other frames are loaded gradually
+// when Play is pressed, which keeps us under RainViewer's free request limit.
+function pause(){
+  clearInterval(timer);timer=null;loading=false;pb.textContent='Play';
+  layers.forEach(function(l,k){if(k!=cur&&m.hasLayer(l))m.removeLayer(l)});
+}
 function tog(){
-  if(timer)return pause();
-  pb.textContent='Pause';
-  timer=setInterval(function(){show((cur+1)%layers.length)},600);
+  if(timer||loading)return pause();
+  loading=true;pb.textContent='Pause';
+  layers.forEach(function(l,k){
+    setTimeout(function(){if(!loading)return;ensure(k);l.setOpacity(k==cur?.7:0)},k*150);
+  });
+  setTimeout(function(){
+    if(!loading)return;
+    loading=false;
+    timer=setInterval(function(){show((cur+1)%layers.length)},600);
+  },layers.length*150+1500);
 }
 function radar(){
   fetch('https://api.rainviewer.com/public/weather-maps.json').then(function(r){return r.json()}).then(function(j){
-    var was=!!timer;pause();
-    layers.forEach(function(l){m.removeLayer(l)});
+    var was=!!timer||loading;pause();
+    layers.forEach(function(l){if(m.hasLayer(l))m.removeLayer(l)});
     var f=j.radar.past;
     times=f.map(function(x){return x.time});
+    // 512px tiles = about 4x fewer requests than 256px tiles
     layers=f.map(function(x){
-      return L.tileLayer(j.host+x.path+'/256/{z}/{x}/{y}/2/1_1.png',{opacity:0,maxNativeZoom:7,maxZoom:12}).addTo(m);
+      return L.tileLayer(j.host+x.path+'/512/{z}/{x}/{y}/2/1_1.png',{tileSize:512,zoomOffset:-1,opacity:0,maxNativeZoom:7,maxZoom:12});
     });
     sl.max=f.length-1;show(f.length-1);fit();
     if(was)tog();
