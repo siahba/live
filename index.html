@@ -158,18 +158,20 @@ function show(i){
   layers.forEach(function(l,k){l.setOpacity(k==i?.7:0)});
   cur=i;sl.value=i;
   ts.textContent='Radar: '+new Date(times[i]*1000).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})+(i==layers.length-1?' (latest)':'');
+  cloudShow(i);
 }
 // Only the visible frame is kept on the map. Other frames are loaded gradually
 // when Play is pressed, which keeps us under RainViewer's free request limit.
 function pause(){
   clearInterval(timer);timer=null;loading=false;pb.textContent='Play';
   layers.forEach(function(l,k){if(k!=cur&&m.hasLayer(l))m.removeLayer(l)});
+  cloudTrim();
 }
 function tog(){
   if(timer||loading)return pause();
   loading=true;pb.textContent='Pause';
   layers.forEach(function(l,k){
-    setTimeout(function(){if(!loading)return;ensure(k);l.setOpacity(k==cur?.7:0)},k*150);
+    setTimeout(function(){if(!loading)return;ensure(k);l.setOpacity(k==cur?.7:0);cloudAdd(k)},k*150);
   });
   setTimeout(function(){
     if(!loading)return;
@@ -187,30 +189,61 @@ function radar(){
     layers=f.map(function(x){
       return L.tileLayer(j.host+x.path+'/512/{z}/{x}/{y}/2/1_1.png',{pane:'rad',tileSize:512,zoomOffset:-1,opacity:0,maxNativeZoom:7,maxZoom:12});
     });
-    sl.max=f.length-1;show(f.length-1);fit();
+    sl.max=f.length-1;
+    cloudClear();
+    if(cloudOn)satProbe(function(){cloudShow(cur)});
+    show(f.length-1);fit();
     if(was)tog();
   });
 }
 
-/* ---------- satellite clouds (NASA GIBS / NOAA GOES infrared) ---------- */
-var cloudOn=false, cloudLayer=null, cloudSat=null;
+/* ---------- satellite clouds (NASA GIBS / NOAA GOES infrared), animated with the radar ---------- */
+var cloudOn=false, cloudSatName=null, cloudLayers={}, satLatest=null;
 function cloudName(){return m.getCenter().lng<-100?'GOES-West_ABI_Band13_Clean_Infrared':'GOES-East_ABI_Band13_Clean_Infrared'}
-function cloudRefresh(){
-  if(!cloudOn)return;
-  var n=cloudName();
-  if(n==cloudSat)return;
-  if(cloudLayer)m.removeLayer(cloudLayer);
-  cloudSat=n;
-  cloudLayer=L.tileLayer('https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/'+n+'/default/default/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png',
-    {pane:'sat',opacity:.5,maxNativeZoom:6,maxZoom:19,attribution:'Clouds &copy; NASA GIBS / NOAA GOES'}).addTo(m);
+function satStamp(ms){return new Date(Math.floor(ms/600000)*600000).toISOString().slice(0,19)+'Z'}
+function satUrl(n,T,z,y,x){return 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/'+n+'/default/'+T+'/GoogleMapsCompatible_Level6/'+z+'/'+y+'/'+x+'.png'}
+function cloudClear(){
+  Object.keys(cloudLayers).forEach(function(k){if(m.hasLayer(cloudLayers[k]))m.removeLayer(cloudLayers[k])});
+  cloudLayers={};
+}
+// find the newest satellite time that actually exists (satellite data lags real time by ~20-30 min)
+function satProbe(done){
+  var n=cloudSatName=cloudName(), t=Math.floor((Date.now()-600000)/600000)*600000, tries=0;
+  (function next(){
+    var im=new Image();
+    im.onload=function(){satLatest=t;done()};
+    im.onerror=function(){t-=600000;if(++tries<8)next();else{satLatest=null;done()}};
+    im.src=satUrl(n,satStamp(t),0,0,0);
+  })();
+}
+function satFor(i){return satStamp(Math.min(times[i]*1000,satLatest))}
+function cloudAdd(i){
+  if(!cloudOn||satLatest==null||!times.length)return;
+  var T=satFor(i);
+  if(!cloudLayers[T])cloudLayers[T]=L.tileLayer(satUrl(cloudSatName,T,'{z}','{y}','{x}'),
+    {pane:'sat',opacity:0,maxNativeZoom:6,maxZoom:19,attribution:'Clouds &copy; NASA GIBS / NOAA GOES'});
+  if(!m.hasLayer(cloudLayers[T]))cloudLayers[T].addTo(m);
+}
+function cloudShow(i){
+  if(!cloudOn||satLatest==null||!times.length)return;
+  cloudAdd(i);
+  var T=satFor(i);
+  Object.keys(cloudLayers).forEach(function(k){cloudLayers[k].setOpacity(k==T?.5:0)});
+}
+function cloudTrim(){
+  if(!cloudOn||satLatest==null||!times.length)return;
+  var T=satFor(cur);
+  Object.keys(cloudLayers).forEach(function(k){if(k!=T&&m.hasLayer(cloudLayers[k]))m.removeLayer(cloudLayers[k])});
 }
 function clouds(){
   cloudOn=!cloudOn;
   $('cb').classList.toggle('on',cloudOn);
-  if(cloudOn)cloudRefresh();
-  else{if(cloudLayer)m.removeLayer(cloudLayer);cloudLayer=null;cloudSat=null}
+  if(cloudOn)satProbe(function(){cloudShow(cur)});
+  else cloudClear();
 }
-m.on('moveend',cloudRefresh);
+m.on('moveend',function(){
+  if(cloudOn&&cloudName()!==cloudSatName){cloudClear();satProbe(function(){cloudShow(cur)})}
+});
 
 /* ---------- weather ---------- */
 function wx(lat,lon,name){
