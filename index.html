@@ -29,7 +29,10 @@ body{margin:0;background:#2f3236}
   font-family:'Outfit',system-ui,sans-serif!important;font-weight:500;font-size:clamp(13px,1.2vw,16px);
   color:#fff;background:rgba(10,10,12,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:6px 14px;box-shadow:0 2px 8px rgba(0,0,0,.3);outline:none}
-#bar button,#ctl button{cursor:pointer}
+#bar button,#ctl button,#bar a.btn{cursor:pointer}
+#bar a.btn{font-family:'Outfit',system-ui,sans-serif!important;font-weight:500;font-size:clamp(13px,1.2vw,16px);color:#fff;text-decoration:none;background:rgba(10,10,12,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:6px 14px;box-shadow:0 2px 8px rgba(0,0,0,.3);white-space:nowrap}
+#bar a.btn:hover{background:rgba(70,74,80,.7)}
+#ctl button.on{border-color:#00C0F0;color:#00C0F0}
 #bar button:hover,#ctl button:hover{background:rgba(70,74,80,.7)}
 #bar input:focus{border-color:#00C0F0}
 #bar input::placeholder{color:rgba(255,255,255,.55)}
@@ -77,6 +80,7 @@ body{margin:0;background:#2f3236}
       <input id="q" placeholder="City or ZIP" value="Salt Lake City">
       <button onclick="go()">Search</button>
       <button onclick="loc()">Use my location</button>
+      <a id="full" class="btn" href="https://radar.wo-cloud.com/pwa/" target="_blank" rel="noopener">Full radar &#8599;</a>
       <span id="now">Loading...</span>
     </div>
     <div id="hr"></div>
@@ -84,6 +88,7 @@ body{margin:0;background:#2f3236}
   <div id="bt">
     <div id="ctl">
       <button id="pb" onclick="tog()">Play</button>
+      <button id="cb" onclick="clouds()">Clouds</button>
       <input id="sl" type="range" min="0" max="0" value="0" oninput="pause();show(+this.value)">
       <span id="ts"></span>
     </div>
@@ -101,6 +106,8 @@ var ll=[40.76,-111.89], layers=[], times=[], cur=0, timer=null, loading=false, W
 var m=L.map('map').setView(ll,7);
 m.doubleClickZoom.disable();
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',{attribution:'Esri, HERE, Garmin, OpenStreetMap contributors',maxZoom:19}).addTo(m);
+m.createPane('sat').style.zIndex=210;   // clouds under the radar
+m.createPane('rad').style.zIndex=220;
 var mk=L.marker(ll).addTo(m);
 m.attributionControl.addAttribution('Radar &copy; <a href="https://www.rainviewer.com" target="_blank">RainViewer</a>');
 
@@ -178,16 +185,37 @@ function radar(){
     times=f.map(function(x){return x.time});
     // 512px tiles = about 4x fewer requests than 256px tiles
     layers=f.map(function(x){
-      return L.tileLayer(j.host+x.path+'/512/{z}/{x}/{y}/2/1_1.png',{tileSize:512,zoomOffset:-1,opacity:0,maxNativeZoom:7,maxZoom:12});
+      return L.tileLayer(j.host+x.path+'/512/{z}/{x}/{y}/2/1_1.png',{pane:'rad',tileSize:512,zoomOffset:-1,opacity:0,maxNativeZoom:7,maxZoom:12});
     });
     sl.max=f.length-1;show(f.length-1);fit();
     if(was)tog();
   });
 }
 
+/* ---------- satellite clouds (NASA GIBS / NOAA GOES infrared) ---------- */
+var cloudOn=false, cloudLayer=null, cloudSat=null;
+function cloudName(){return m.getCenter().lng<-100?'GOES-West_ABI_Band13_Clean_Infrared':'GOES-East_ABI_Band13_Clean_Infrared'}
+function cloudRefresh(){
+  if(!cloudOn)return;
+  var n=cloudName();
+  if(n==cloudSat)return;
+  if(cloudLayer)m.removeLayer(cloudLayer);
+  cloudSat=n;
+  cloudLayer=L.tileLayer('https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/'+n+'/default/default/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png',
+    {pane:'sat',opacity:.5,maxNativeZoom:6,maxZoom:19,attribution:'Clouds &copy; NASA GIBS / NOAA GOES'}).addTo(m);
+}
+function clouds(){
+  cloudOn=!cloudOn;
+  $('cb').classList.toggle('on',cloudOn);
+  if(cloudOn)cloudRefresh();
+  else{if(cloudLayer)m.removeLayer(cloudLayer);cloudLayer=null;cloudSat=null}
+}
+m.on('moveend',cloudRefresh);
+
 /* ---------- weather ---------- */
 function wx(lat,lon,name){
   mk.setLatLng([lat,lon]);ll=[lat,lon];
+  $('full').href='https://radar.wo-cloud.com/pwa/?placemark='+lat+','+lon+'&center='+lat+','+lon+'&zoom=8&loop=true&tempunit=fahrenheit&windunit=mph&lang=en-US&desktop=true&placemarkName='+encodeURIComponent(name);
   var url='https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+
     '&current=temperature_2m,wind_speed_10m,relative_humidity_2m'+
     '&hourly=temperature_2m,weather_code,precipitation_probability'+
